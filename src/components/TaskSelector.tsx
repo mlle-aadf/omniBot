@@ -39,6 +39,7 @@ export default function TaskSelector({
               {tasks.map((task) => (
                 <Button
                   key={task.name}
+                  type="button"
                   onClick={() => handleTaskSelect(task.name)}
                   variant="outline"
                   className="text-sm p-2 h-auto border-pink-300/30 dark:border-pink-800/30 bg-indigo-800/30 dark:bg-gray-800/30 text-cyan-200 hover:bg-indigo-700/50 dark:hover:bg-gray-700/50 flex flex-col items-start"

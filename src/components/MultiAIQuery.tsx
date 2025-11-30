@@ -212,7 +212,7 @@ export default function MultiAIQuery() {
 
   return (
     <div className="flex flex-col lg:flex-row min-h-screen w-full overflow-hidden bg-gradient-to-br from-purple-800 to-indigo-900 dark:from-gray-900 dark:to-gray-800 vaporwave-bg">
-      <div className="w-full lg:w-1/4 p-4 lg:p-6 flex flex-col gap-4 neon-card lg:max-h-screen overflow-y-auto custom-scrollbar">
+      <div className="w-full lg:w-1/4 p-4 lg:p-6 flex flex-col gap-4 neon-card max-h-screen overflow-y-auto custom-scrollbar">
         <div className="flex items-center justify-between mb-2">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-cyan-400 bg-clip-text text-transparent flex items-center gap-2 omnibot-title">
             <Sparkles className="h-6 w-6 text-pink-500" />

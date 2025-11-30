@@ -221,23 +221,21 @@ export default function MultiAIQuery() {
           <SettingsDropdown viewLayout={viewLayout} setViewLayout={setViewLayout} />
         </div>
         
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 flex-1 max-h-[calc(100vh-150px)]">
-          <div className="flex flex-col">
-            <div className="max-h-[30vh] overflow-y-auto custom-scrollbar">
-              <ModelSelector 
-                availableModels={availableModels} 
-                selectedModels={selectedModels}
-                onToggleModel={toggleModel}
-              />
-            </div>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 flex-1 min-h-0">
+          <div className="flex flex-col gap-4 flex-shrink-0">
+            <ModelSelector 
+              availableModels={availableModels} 
+              selectedModels={selectedModels}
+              onToggleModel={toggleModel}
+            />
+
+            <TaskSelector
+              availableModels={availableModels}
+              onSelectTask={handleTaskSelect}
+            />
           </div>
 
-          <TaskSelector
-            availableModels={availableModels}
-            onSelectTask={handleTaskSelect}
-          />
-
-          <div className="flex flex-col min-h-0 mt-4">
+          <div className="flex flex-col flex-1 min-h-0">
             <Textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}

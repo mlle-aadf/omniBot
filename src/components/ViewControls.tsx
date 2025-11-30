@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ViewLayout } from "@/lib/types";
-import { Columns, Rows, Grid, RefreshCw } from "lucide-react";
+import { Columns, Rows, RefreshCw } from "lucide-react";
 
 interface ViewControlsProps {
   viewLayout: ViewLayout;
@@ -58,23 +58,6 @@ export default function ViewControls({
             </Tooltip>
           </TooltipProvider>
 
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className={viewLayout === "tiles" ? "bg-purple-100 dark:bg-gray-800" : ""}
-                  onClick={() => setViewLayout("tiles")}
-                >
-                  <Grid className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Tiles View</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
         </div>
 
         <TooltipProvider>

@@ -7,7 +7,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { usePuter } from "@/hooks/usePuter";
 import { queryClaude, queryDeepseek, queryGemini, queryGemma, queryGrok, queryLlama, queryMistral, queryOpenAI } from "@/lib/ai-clients";
 import { AIModel, AIResponse, ViewLayout } from "@/lib/types";
-import { Loader, MessageSquare, Sparkles, StopCircle } from "lucide-react";
+import { Bot, Loader, MessageSquare, StopCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import ModelSelector from "./ModelSelector";
 import ResponseCard from "./ResponseCard";
@@ -215,7 +215,7 @@ export default function MultiAIQuery() {
       <div className="w-full lg:w-1/4 p-4 lg:p-6 flex flex-col gap-4 neon-card lg:max-h-screen overflow-y-auto custom-scrollbar">
         <div className="flex items-center justify-between mb-2">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-cyan-400 bg-clip-text text-transparent flex items-center gap-2 omnibot-title">
-            <Sparkles className="h-6 w-6 text-pink-500" />
+            <Bot className="h-7 w-7 text-pink-500" />
             OmniBot
           </h1>
           <SettingsDropdown viewLayout={viewLayout} setViewLayout={setViewLayout} />

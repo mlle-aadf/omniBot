@@ -211,8 +211,8 @@ export default function MultiAIQuery() {
   );
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen w-full overflow-hidden bg-gradient-to-br from-purple-800 to-indigo-900 dark:from-gray-900 dark:to-gray-800 vaporwave-bg">
-      <div className="w-full lg:w-1/4 p-4 lg:p-6 flex flex-col gap-4 neon-card lg:max-h-screen overflow-y-auto custom-scrollbar">
+    <div className="flex flex-col lg:flex-row h-screen w-full overflow-hidden bg-gradient-to-br from-purple-800 to-indigo-900 dark:from-gray-900 dark:to-gray-800 vaporwave-bg">
+      <div className="w-full lg:w-1/4 h-full p-4 lg:p-6 flex flex-col gap-4 neon-card overflow-y-auto custom-scrollbar">
         <div className="flex items-center justify-between mb-2">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-cyan-400 bg-clip-text text-transparent flex items-center gap-2 omnibot-title">
             <Bot className="h-7 w-7 text-pink-500" />
@@ -221,39 +221,42 @@ export default function MultiAIQuery() {
           <SettingsDropdown viewLayout={viewLayout} setViewLayout={setViewLayout} />
         </div>
         
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 flex-1 max-h-[calc(100vh-150px)]">
-          <div className="flex flex-col">
-            <div className="max-h-[30vh] overflow-y-auto custom-scrollbar">
-              <ModelSelector 
-                availableModels={availableModels} 
-                selectedModels={selectedModels}
-                onToggleModel={toggleModel}
-              />
-            </div>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 flex-1 min-h-0">
+          <div className="flex flex-col gap-4 flex-shrink-0">
+            <ModelSelector 
+              availableModels={availableModels} 
+              selectedModels={selectedModels}
+              onToggleModel={toggleModel}
+            />
+
+            <TaskSelector
+              availableModels={availableModels}
+              onSelectTask={handleTaskSelect}
+            />
           </div>
 
-          <TaskSelector
-            availableModels={availableModels}
-            onSelectTask={handleTaskSelect}
-          />
-
-          <div className="flex flex-col min-h-0 mt-4">
+          <div className="flex flex-col flex-1 min-h-0">
             <Textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="Enter your prompt here..."
-              className="mb-4 resize-none border-pink-300 focus-visible:ring-cyan-400 min-h-[120px] max-h-[20vh] bg-indigo-900/40 dark:bg-gray-900/70 text-white placeholder:text-cyan-200/50 shadow-neon"
+              className="mb-4 resize-none border-pink-300 focus-visible:ring-cyan-400 flex-1 bg-indigo-900/40 dark:bg-gray-900/70 text-white placeholder:text-cyan-200/50 shadow-neon"
             />
             <div className="flex gap-2">
               <Button 
                 type="submit" 
                 className="w-full bg-gradient-to-r from-pink-500 to-cyan-500 hover:from-pink-600 hover:to-cyan-600 transition-all duration-300 shadow-neon hover:shadow-neon-lg disabled:opacity-50 disabled:pointer-events-none disabled:shadow-none"
-                disabled={isLoading}
+                disabled={isLoading || selectedModels.length === 0}
               >
                 {isLoading ? (
                   <>
                     <Loader className="mr-2 h-4 w-4 animate-spin" />
                     {loadingText}
+                  </>
+                ) : selectedModels.length === 0 ? (
+                  <>
+                    <MessageSquare className="mr-2 h-4 w-4" />
+                    Select at least one model
                   </>
                 ) : (
                   <>

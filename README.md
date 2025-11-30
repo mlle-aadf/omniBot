@@ -1,4 +1,4 @@
-# 🚀 Multi-AI Query Tool (WIP)
+# 🚀 OmniBot (WIP)
 
 A web app that allows users to send the same prompt to multiple AI models simultaneously and compare responses.
 
@@ -43,5 +43,5 @@ Pull requests are welcome! Open an issue for feature requests or bug reports.
 ## 🛡️ License
 MIT License. See `LICENSE` for details.
 
-![echoes](https://github.com/user-attachments/assets/f3054bf6-3c6c-439a-9667-e3f13e69893c)
+[![App Demo](https://github.com/user-attachments/assets/1c9a003a-9000-401d-9918-d1377fd8d4bc)](https://echoes-ai.vercel.app/)
 

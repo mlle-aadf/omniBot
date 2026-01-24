@@ -13,8 +13,8 @@ A web app that allows users to send the same prompt to multiple AI models simult
 - **AI Integration**: Uses Puter.js for model interactions (requires sign-up to use)
 
 ## 🤖 Built With AI  
-This project was developed with the help of AI-powered tools:  
-- **ChatGPT** – Assisted in outlining the project, providing prompts, and generating documentation  
+This project was a one-time experiment in AI-assisted “vibe-coding” (not my usual workflow).
+- **Claude + Perplexity** – Assisted in outlining the project, providing prompts, and generating documentation  
 - **Lovable** – Streamlined front-end component generation and UI structuring  
 - **GitHub Copilot** – Facilitated code integration, debugging, and cross-file implementations  
 

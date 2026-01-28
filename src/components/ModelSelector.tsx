@@ -33,7 +33,7 @@ export default function ModelSelector({
           <CollapsibleTrigger className="w-full">
             <h4 className="text-base font-semibold text-cyan-300 dark:text-cyan-400 flex items-center gap-2 retro-text cursor-pointer hover:text-cyan-200 transition-colors">
               <Brain className="h-4 w-4 text-pink-500 pixel-art flex-shrink-0" />
-              <span className="truncate">Choose Bots</span>
+              <span className="truncate">Bots</span>
               <ChevronRight className={`h-4 w-4 text-pink-500 ml-auto transition-transform ${isOpen ? 'rotate-90' : ''}`} />
             </h4>
           </CollapsibleTrigger>

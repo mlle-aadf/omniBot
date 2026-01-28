@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600;700&family=Press+Start+2P&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -102,8 +102,8 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'VT323', monospace;
-    font-size: 1.1rem;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1.15rem;
   }
 
   h1, h2, h3, h4, h5, h6 {

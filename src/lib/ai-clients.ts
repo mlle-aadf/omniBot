@@ -1,3 +1,5 @@
+import { ResponseLength, responseLengthPrompts } from "@/lib/types";
+
 export interface AIResponse {
   model: string;
   response: string;
@@ -20,10 +22,17 @@ const ensurePuter = () => {
   }
 };
 
-export async function queryOpenAI(prompt: string): Promise<AIResponse> {
+const buildPromptWithLength = (prompt: string, responseLength?: ResponseLength): string => {
+  if (!responseLength) return prompt;
+  const instruction = responseLengthPrompts[responseLength];
+  return `${instruction}\n\n${prompt}`;
+};
+
+export async function queryOpenAI(prompt: string, responseLength?: ResponseLength): Promise<AIResponse> {
   try {
     ensurePuter();
-    const response = await window.puter.ai.chat(prompt, {
+    const fullPrompt = buildPromptWithLength(prompt, responseLength);
+    const response = await window.puter.ai.chat(fullPrompt, {
       model: 'gpt-4o-mini' ,
     });
 
@@ -44,10 +53,11 @@ export async function queryOpenAI(prompt: string): Promise<AIResponse> {
   }
 }
 
-export async function queryGemini(prompt: string): Promise<AIResponse> {
+export async function queryGemini(prompt: string, responseLength?: ResponseLength): Promise<AIResponse> {
   try {
     ensurePuter();
-    const response = await window.puter.ai.chat(prompt, {
+    const fullPrompt = buildPromptWithLength(prompt, responseLength);
+    const response = await window.puter.ai.chat(fullPrompt, {
       model: 'gemini-2.0-flash'
     });
 
@@ -68,10 +78,11 @@ export async function queryGemini(prompt: string): Promise<AIResponse> {
   }
 }
 
-export async function queryClaude(prompt: string): Promise<AIResponse> {
+export async function queryClaude(prompt: string, responseLength?: ResponseLength): Promise<AIResponse> {
   try {
     ensurePuter();
-    const response = await window.puter.ai.chat(prompt, {
+    const fullPrompt = buildPromptWithLength(prompt, responseLength);
+    const response = await window.puter.ai.chat(fullPrompt, {
       model: 'claude-3-5-sonnet' 
     });
 
@@ -92,10 +103,11 @@ export async function queryClaude(prompt: string): Promise<AIResponse> {
   }
 }
 
-export async function queryDeepseek(prompt: string): Promise<AIResponse> {
+export async function queryDeepseek(prompt: string, responseLength?: ResponseLength): Promise<AIResponse> {
   try {
     ensurePuter();
-    const response = await window.puter.ai.chat(prompt, {
+    const fullPrompt = buildPromptWithLength(prompt, responseLength);
+    const response = await window.puter.ai.chat(fullPrompt, {
       model: 'deepseek-chat' 
     });
 
@@ -116,10 +128,11 @@ export async function queryDeepseek(prompt: string): Promise<AIResponse> {
   }
 }
 
-export async function queryGrok(prompt: string): Promise<AIResponse> {
+export async function queryGrok(prompt: string, responseLength?: ResponseLength): Promise<AIResponse> {
   try {
     ensurePuter();
-    const response = await window.puter.ai.chat(prompt, {
+    const fullPrompt = buildPromptWithLength(prompt, responseLength);
+    const response = await window.puter.ai.chat(fullPrompt, {
       model: 'grok-beta' 
     });
 
@@ -140,10 +153,11 @@ export async function queryGrok(prompt: string): Promise<AIResponse> {
   }
 }
 
-export async function queryLlama(prompt: string): Promise<AIResponse> {
+export async function queryLlama(prompt: string, responseLength?: ResponseLength): Promise<AIResponse> {
   try {
     ensurePuter();
-    const response = await window.puter.ai.chat(prompt, {
+    const fullPrompt = buildPromptWithLength(prompt, responseLength);
+    const response = await window.puter.ai.chat(fullPrompt, {
       model: 'meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo' 
     });
 
@@ -164,10 +178,11 @@ export async function queryLlama(prompt: string): Promise<AIResponse> {
   }
 }
 
-export async function queryMistral(prompt: string): Promise<AIResponse> {
+export async function queryMistral(prompt: string, responseLength?: ResponseLength): Promise<AIResponse> {
   try {
     ensurePuter();
-    const response = await window.puter.ai.chat(prompt, {
+    const fullPrompt = buildPromptWithLength(prompt, responseLength);
+    const response = await window.puter.ai.chat(fullPrompt, {
       model: 'mistral-large-latest' 
     });
 
@@ -188,10 +203,11 @@ export async function queryMistral(prompt: string): Promise<AIResponse> {
   }
 }
 
-export async function queryGemma(prompt: string): Promise<AIResponse> {
+export async function queryGemma(prompt: string, responseLength?: ResponseLength): Promise<AIResponse> {
   try {
     ensurePuter();
-    const response = await window.puter.ai.chat(prompt, {
+    const fullPrompt = buildPromptWithLength(prompt, responseLength);
+    const response = await window.puter.ai.chat(fullPrompt, {
       model: 'google/gemma-2-27b-it' 
     });
 
@@ -217,15 +233,16 @@ const responseCache = new Map<string, AIResponse>();
 
 export async function queryCachedAI(
   prompt: string, 
-  queryFn: (prompt: string) => Promise<AIResponse>
+  queryFn: (prompt: string, responseLength?: ResponseLength) => Promise<AIResponse>,
+  responseLength?: ResponseLength
 ): Promise<AIResponse> {
-  const cacheKey = `${queryFn.name}-${prompt}`;
+  const cacheKey = `${queryFn.name}-${prompt}-${responseLength}`;
   
   if (responseCache.has(cacheKey)) {
     return responseCache.get(cacheKey)!;
   }
 
-  const response = await queryFn(prompt);
+  const response = await queryFn(prompt, responseLength);
   responseCache.set(cacheKey, response);
   return response;
 }

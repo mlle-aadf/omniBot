@@ -4,34 +4,60 @@ import { preselectModelsForTask, tasks } from "@/lib/taskData";
 import { AIModel } from "@/lib/types";
 import { LightbulbIcon, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useEffect } from "react";
 
 interface TaskSelectorProps {
   availableModels: AIModel[];
-  onSelectTask: (modelIds: string[]) => void;
+  selectedTask: string | null;
+  onSelectTask: (taskName: string | null, modelIds: string[]) => void;
 }
 
 export default function TaskSelector({
   availableModels,
+  selectedTask,
   onSelectTask
 }: TaskSelectorProps) {
-  const [isOpen, setIsOpen] = useState(true);
-  const [selectedTask, setSelectedTask] = useState<string | null>(null);
+  // Collapse when a task is selected
+  const isOpen = selectedTask === null;
 
   const handleTaskSelect = (taskName: string) => {
-    setSelectedTask(taskName);
-    const modelIds = preselectModelsForTask(taskName, availableModels);
-    onSelectTask(modelIds);
+    if (selectedTask === taskName) {
+      // Deselect task and clear all model selections
+      onSelectTask(null, []);
+    } else {
+      // Select task and preselect models
+      const modelIds = preselectModelsForTask(taskName, availableModels);
+      onSelectTask(taskName, modelIds);
+    }
   };
 
+  // Build header text
+  const headerText = selectedTask ? `Tasks: [${selectedTask}]` : "Tasks";
+
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+    <Collapsible open={isOpen}>
       <Card className="bg-indigo-900/40 dark:bg-gray-900/70 backdrop-blur-sm border-pink-300/30 dark:border-pink-800/30 shadow-neon">
         <CardContent className="p-4">
-          <CollapsibleTrigger className="w-full">
-            <h4 className="text-base font-semibold text-cyan-300 dark:text-cyan-400 flex items-center gap-2 retro-text cursor-pointer hover:text-cyan-200 transition-colors">
+          <CollapsibleTrigger 
+            className="w-full"
+            onClick={() => {
+              if (selectedTask) {
+                // If collapsed (task selected), clicking header clears selection
+                onSelectTask(null, []);
+              }
+            }}
+          >
+            <h4 className="text-base font-semibold flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
               <LightbulbIcon className="h-4 w-4 text-pink-500 pixel-art flex-shrink-0" />
-              <span className="truncate text-base">Tasks</span>
+              {selectedTask ? (
+                <span className="truncate text-base bg-gradient-to-r from-pink-500 to-cyan-500 bg-clip-text text-transparent font-bold">
+                  {headerText}
+                </span>
+              ) : (
+                <span className="truncate text-base text-cyan-300 dark:text-cyan-400 retro-text">
+                  {headerText}
+                </span>
+              )}
               <ChevronRight className={`h-4 w-4 text-pink-500 ml-auto transition-transform ${isOpen ? 'rotate-90' : ''}`} />
             </h4>
           </CollapsibleTrigger>

@@ -6,7 +6,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { usePuter } from "@/hooks/usePuter";
 import { queryClaude, queryDeepseek, queryGemini, queryGemma, queryGrok, queryLlama, queryMistral, queryOpenAI } from "@/lib/ai-clients";
-import { AIModel, AIResponse, ViewLayout } from "@/lib/types";
+import { AIModel, AIResponse, ResponseLength, ViewLayout } from "@/lib/types";
 import { Bot, Loader, MessageSquare, StopCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import ModelSelector from "./ModelSelector";
@@ -21,7 +21,9 @@ export default function MultiAIQuery() {
   const [expandedCards, setExpandedCards] = useState<string[]>([]);
   const [maximizedCard, setMaximizedCard] = useState<string | null>(null);
   const [selectedModels, setSelectedModels] = useLocalStorage<string[]>("selectedModels", []);
+  const [selectedTask, setSelectedTask] = useState<string | null>(null);
   const [viewLayout, setViewLayout] = useLocalStorage<ViewLayout>("viewLayout", "columns");
+  const [responseLength, setResponseLength] = useLocalStorage<ResponseLength>("responseLength", "brief");
   const { toast } = useToast();
   const { isPuterReady, error: puterError } = usePuter();
   const [abortController, setAbortController] = useState<AbortController | null>(null);
@@ -125,7 +127,7 @@ export default function MultiAIQuery() {
     try {
       const selectedModelQueries = availableModels
         .filter(model => selectedModels.includes(model.id))
-        .map(model => model.queryFn(prompt));
+        .map(model => model.queryFn(prompt, responseLength));
 
       const results = await Promise.allSettled(selectedModelQueries);
 
@@ -190,7 +192,8 @@ export default function MultiAIQuery() {
     );
   };
 
-  const handleTaskSelect = (modelIds: string[]) => {
+  const handleTaskSelect = (taskName: string | null, modelIds: string[]) => {
+    setSelectedTask(taskName);
     setSelectedModels(modelIds);
   };
 
@@ -218,7 +221,12 @@ export default function MultiAIQuery() {
             <Bot className="h-7 w-7 text-pink-500" />
             OmniBot
           </h1>
-          <SettingsDropdown viewLayout={viewLayout} setViewLayout={setViewLayout} />
+          <SettingsDropdown 
+            viewLayout={viewLayout} 
+            setViewLayout={setViewLayout}
+            responseLength={responseLength}
+            setResponseLength={setResponseLength}
+          />
         </div>
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 flex-1 min-h-0">
@@ -231,6 +239,7 @@ export default function MultiAIQuery() {
 
             <TaskSelector
               availableModels={availableModels}
+              selectedTask={selectedTask}
               onSelectTask={handleTaskSelect}
             />
           </div>

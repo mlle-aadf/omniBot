@@ -5,20 +5,27 @@ import { AIModel } from "@/lib/types";
 import { LightbulbIcon, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
+
 interface TaskSelectorProps {
   availableModels: AIModel[];
   onSelectTask: (modelIds: string[]) => void;
 }
+
 export default function TaskSelector({
   availableModels,
   onSelectTask
 }: TaskSelectorProps) {
   const [isOpen, setIsOpen] = useState(true);
+  const [selectedTask, setSelectedTask] = useState<string | null>(null);
+
   const handleTaskSelect = (taskName: string) => {
+    setSelectedTask(taskName);
     const modelIds = preselectModelsForTask(taskName, availableModels);
     onSelectTask(modelIds);
   };
-  return <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+
+  return (
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <Card className="bg-indigo-900/40 dark:bg-gray-900/70 backdrop-blur-sm border-pink-300/30 dark:border-pink-800/30 shadow-neon">
         <CardContent className="p-4">
           <CollapsibleTrigger className="w-full">
@@ -31,12 +38,29 @@ export default function TaskSelector({
           
           <CollapsibleContent className="mt-3">
             <div className="grid grid-cols-2 gap-2 max-h-[30vh] overflow-y-auto pr-2 custom-scrollbar">
-              {tasks.map(task => <Button key={task.name} type="button" onClick={() => handleTaskSelect(task.name)} variant="outline" className="text-sm p-2 h-auto border-pink-300/30 dark:border-pink-800/30 bg-indigo-800/30 dark:bg-gray-800/30 text-cyan-200 hover:bg-indigo-700/50 dark:hover:bg-gray-700/50 flex flex-col items-start" title={task.description}>
-                  <span className="font-semibold">{task.name}</span>
-                </Button>)}
+              {tasks.map(task => {
+                const isSelected = selectedTask === task.name;
+                return (
+                  <Button
+                    key={task.name}
+                    type="button"
+                    onClick={() => handleTaskSelect(task.name)}
+                    variant="outline"
+                    className={`text-sm p-2 h-auto flex flex-col items-start transition-all duration-200 ${
+                      isSelected
+                        ? "bg-gradient-to-r from-pink-500 to-cyan-500 text-gray-900 font-semibold border-cyan-400 hover:from-pink-600 hover:to-cyan-600"
+                        : "border-pink-300/30 dark:border-pink-800/30 bg-indigo-800/30 dark:bg-gray-800/30 text-cyan-200 hover:bg-indigo-700/50 dark:hover:bg-gray-700/50"
+                    }`}
+                    title={task.description}
+                  >
+                    <span className="font-semibold">{task.name}</span>
+                  </Button>
+                );
+              })}
             </div>
           </CollapsibleContent>
         </CardContent>
       </Card>
-    </Collapsible>;
+    </Collapsible>
+  );
 }

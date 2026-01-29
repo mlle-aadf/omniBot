@@ -6,84 +6,84 @@
 
 @layer base {
   :root {
-    /* Light Theme - Warm Cream/Peach Contrast */
-    --background: 40 50% 96%;
-    --foreground: 30 30% 15%;
+    /* Light Theme - Cool Purple/Cyan Aesthetic (matching dark theme) */
+    --background: 270 25% 96%;
+    --foreground: 270 35% 14%;
 
-    --card: 45 45% 94%;
-    --card-foreground: 30 25% 12%;
+    --card: 270 20% 94%;
+    --card-foreground: 270 30% 11%;
 
-    --popover: 45 45% 94%;
-    --popover-foreground: 30 25% 12%;
+    --popover: 270 20% 94%;
+    --popover-foreground: 270 30% 11%;
 
-    --primary: 328 85% 55%;
-    --primary-foreground: 45 50% 98%;
+    --primary: 283 95% 52%;
+    --primary-foreground: 270 25% 98%;
 
-    --secondary: 35 60% 88%;
-    --secondary-foreground: 30 40% 20%;
+    --secondary: 320 85% 72%;
+    --secondary-foreground: 270 30% 16%;
 
-    --muted: 40 30% 90%;
-    --muted-foreground: 30 15% 45%;
+    --muted: 270 20% 89%;
+    --muted-foreground: 270 15% 50%;
 
-    --accent: 25 70% 85%;
-    --accent-foreground: 30 30% 15%;
+    --accent: 187 80% 52%;
+    --accent-foreground: 270 30% 13%;
 
-    --destructive: 0 75% 55%;
-    --destructive-foreground: 45 50% 98%;
+    --destructive: 0 80% 52%;
+    --destructive-foreground: 270 25% 98%;
 
-    --border: 35 30% 82%;
-    --input: 35 30% 85%;
-    --ring: 328 85% 55%;
+    --border: 270 20% 84%;
+    --input: 270 20% 86%;
+    --ring: 283 95% 52%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 40 45% 94%;
-    --sidebar-foreground: 30 25% 25%;
-    --sidebar-primary: 328 85% 50%;
-    --sidebar-primary-foreground: 45 50% 98%;
-    --sidebar-accent: 35 40% 88%;
-    --sidebar-accent-foreground: 30 30% 15%;
-    --sidebar-border: 35 25% 80%;
-    --sidebar-ring: 328 85% 55%;
+    --sidebar-background: 0 100% 50%;
+    --sidebar-foreground: 270 30% 22%;
+    --sidebar-primary: 283 95% 50%;
+    --sidebar-primary-foreground: 270 25% 98%;
+    --sidebar-accent: 320 85% 68%;
+    --sidebar-accent-foreground: 270 30% 14%;
+    --sidebar-border: 270 15% 81%;
+    --sidebar-ring: 283 95% 52%;
 
-    /* Vaporwave Theme Colors - Light Mode */
-    --vaporwave-pink: 328 90% 50%;
-    --vaporwave-cyan: 187 80% 35%;
-    --vaporwave-purple: 280 70% 55%;
-    --vaporwave-indigo: 255 65% 45%;
-    --vaporwave-blue: 210 80% 45%;
+    /* Vaporwave Theme Colors - Light Mode (cool palette) */
+    --vaporwave-pink: 283 95% 52%;
+    --vaporwave-cyan: 187 80% 52%;
+    --vaporwave-purple: 280 85% 50%;
+    --vaporwave-indigo: 260 90% 48%;
+    --vaporwave-blue: 210 85% 58%;
   }
 
   .dark {
     /* Dark Theme - Much Darker */
     --background: 252 50% 5%;
     --foreground: 210 40% 98%;
-    
+
     --card: 252 40% 7%;
     --card-foreground: 210 40% 98%;
-    
+
     --popover: 252 40% 7%;
     --popover-foreground: 210 40% 98%;
-    
+
     --primary: 283 90% 60%;
     --primary-foreground: 252 10% 5%;
-    
+
     --secondary: 246 40% 15%;
     --secondary-foreground: 210 40% 98%;
-    
+
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-    
+
     --accent: 246 35% 20%;
     --accent-foreground: 210 40% 98%;
-    
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    
+
     --border: 246 30% 20%;
     --input: 246 30% 20%;
     --ring: 212.7 26.8% 83.9%;
-    
+
     --sidebar-background: 252 40% 7%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -106,14 +106,19 @@
     font-size: 1.15rem;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: 'Press Start 2P', cursive;
   }
 }
 
 /* Vaporwave Theme Classes */
 .vaporwave-bg {
-  background: linear-gradient(135deg, #f5e6d3, #ffd4a3, #ffb3c6);
+  background: linear-gradient(135deg, #ffffff, #ffa3f3, #d8a3f0);
   background-size: 400% 400%;
   animation: gradient-shift 15s ease infinite;
 }
@@ -161,9 +166,11 @@
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -172,7 +179,7 @@
 /* Grid line background */
 .grid-lines {
   background-image: linear-gradient(rgba(155, 135, 245, 0.2) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(155, 135, 245, 0.2) 1px, transparent 1px);
+    linear-gradient(90deg, rgba(155, 135, 245, 0.2) 1px, transparent 1px);
   background-size: 30px 30px;
 }
 
@@ -182,6 +189,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -219,9 +227,12 @@
 
 /* Neon text glow animation */
 @keyframes neon-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff00ff, 0 0 20px #ff00ff;
   }
+
   50% {
     text-shadow: 0 0 5px #fff, 0 0 10px #00ffff, 0 0 15px #00ffff, 0 0 20px #00ffff;
   }

@@ -2,7 +2,7 @@
 
 A web app that allows users to send the same prompt to multiple AI models simultaneously and compare responses.
 
-[![App Demo](https://github.com/user-attachments/assets/1c9a003a-9000-401d-9918-d1377fd8d4bc)](https://echoes-ai.vercel.app/)
+[![App Demo](src/assets/OmniBot.png)](https://echoes-ai.vercel.app/)
 
 ## ✨ Features
 - 🌎 **Multi-AI Search**: Query multiple AI models (GPT-4, Gemini, Claude, DeepSeek, Grok) at once.
@@ -15,10 +15,11 @@ A web app that allows users to send the same prompt to multiple AI models simult
 - **AI Integration**: Uses Puter.js for model interactions (requires sign-up to use)
 
 ## 🤖 Built With AI  
-This project was a one-time experiment in AI-assisted “vibe-coding” (not my usual workflow).
+This project was a one-time experiment in AI-assisted "vibe-coding" and exploring various AI development tools (not my usual workflow).
 - **Claude + Perplexity** – Assisted in outlining the project, providing prompts, and generating documentation  
 - **Lovable** – Streamlined front-end component generation and UI structuring  
 - **GitHub Copilot** – Facilitated code integration, debugging, and cross-file implementations  
+- **Antigravity** – Used for code review and refactoring 
 
 ## 📦 Installation
 ```bash

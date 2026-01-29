@@ -4,10 +4,10 @@ import { AIResponse, ResponseLength, responseLengthPrompts } from "@/lib/types";
 export const MODEL_CONFIG: Record<string, string> = {
   gpt4: 'gpt-4o-mini',
   gemini: 'gemini-2.0-flash',
-  claude: 'claude-3-5-sonnet',
+  claude: 'claude-sonnet-4.5', 
   deepseek: 'deepseek-chat',
-  grok: 'grok-beta',
-  llama: 'meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo',
+  grok: 'x-ai/grok-2', 
+  llama: 'meta-llama/llama-3.1-405b-instruct:free',
   mistral: 'mistral-large-latest',
   gemma: 'google/gemma-2-27b-it',
 };

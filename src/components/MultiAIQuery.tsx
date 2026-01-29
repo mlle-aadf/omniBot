@@ -1,16 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMultiModelQuery } from "@/hooks/useMultiModelQuery";
 import { AIModel, ResponseLength, ViewLayout } from "@/lib/types";
-import { Bot, Loader, MessageSquare, StopCircle } from "lucide-react";
 import { useEffect, useState } from "react";
-import ModelSelector from "./ModelSelector";
-import ResponseCard from "./ResponseCard";
-import SettingsDropdown from "./SettingsDropdown";
-import TaskSelector from "./TaskSelector";
+import QueryForm from "./features/QueryForm";
+import ResultsGrid from "./features/ResultsGrid";
 
 export default function MultiAIQuery() {
   const [prompt, setPrompt] = useState("");
@@ -77,7 +71,6 @@ export default function MultiAIQuery() {
     await queryAllModels();
   };
 
-
   const toggleCard = (modelId: string) => {
     if (expandedCards.includes(modelId)) {
       if (maximizedCard === modelId) {
@@ -106,135 +99,37 @@ export default function MultiAIQuery() {
     setSelectedModels(modelIds);
   };
 
-  const getLayoutClass = () => {
-    switch (viewLayout) {
-      case "columns":
-        return "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4";
-      case "rows":
-        return "grid-cols-1";
-      default:
-        return "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4";
-    }
-  };
-
-  // Filter responses based on selected models
-  const visibleResponses = responses.filter((_, index) =>
-    selectedModels.includes(selectedModels[index])
-  );
-
   return (
     <div className="flex flex-col lg:flex-row h-screen w-full overflow-hidden bg-gradient-to-br from-purple-800 to-indigo-900 dark:from-gray-900 dark:to-gray-800 vaporwave-bg">
-      <div className="w-full lg:w-1/4 h-full p-4 lg:p-6 flex flex-col gap-4 neon-card overflow-y-auto custom-scrollbar ">
-        <div className="flex items-center justify-between mb-2">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-cyan-400 bg-clip-text text-transparent flex items-center gap-2 omnibot-title">
-            <Bot className="h-7 w-7 text-pink-500" />
-            OmniBot
-          </h1>
-          <SettingsDropdown
-            viewLayout={viewLayout}
-            setViewLayout={setViewLayout}
-            responseLength={responseLength}
-            setResponseLength={setResponseLength}
-          />
-        </div>
+      <QueryForm
+        prompt={prompt}
+        setPrompt={setPrompt}
+        isLoading={isLoading}
+        selectedModels={selectedModels}
+        setSelectedModels={setSelectedModels} // Passed, though we rely on toggleModel more
+        onToggleModel={toggleModel} // Added logic for toggling
+        availableModels={availableModels}
+        selectedTask={selectedTask}
+        onSelectTask={handleTaskSelect}
+        viewLayout={viewLayout}
+        setViewLayout={setViewLayout}
+        responseLength={responseLength}
+        setResponseLength={setResponseLength}
+        onSubmit={handleSubmit}
+        onStop={stopQuery}
+        loadingText={loadingText}
+      />
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 flex-1 min-h-0">
-          <div className="flex flex-col gap-4 flex-shrink-0">
-            <ModelSelector
-              availableModels={availableModels}
-              selectedModels={selectedModels}
-              onToggleModel={toggleModel}
-            />
-
-            <TaskSelector
-              availableModels={availableModels}
-              selectedTask={selectedTask}
-              onSelectTask={handleTaskSelect}
-            />
-          </div>
-
-          <div className="flex flex-col flex-1 min-h-0">
-            <Textarea
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              placeholder="Enter your prompt here..."
-              className="mb-4 resize-none border-pink-300 focus-visible:ring-cyan-400 flex-1 bg-indigo-900/40 dark:bg-gray-900/70 text-white placeholder:text-cyan-200/50 shadow-neon text-lg"
-            />
-            <div className="flex gap-2">
-              <Button
-                type="submit"
-                className="w-full bg-gradient-to-r from-pink-500 to-cyan-500 hover:from-pink-600 hover:to-cyan-600 transition-all duration-300 shadow-neon hover:shadow-neon-lg disabled:opacity-50 disabled:pointer-events-none disabled:shadow-none"
-                disabled={isLoading || selectedModels.length === 0}
-              >
-                {isLoading ? (
-                  <>
-                    <Loader className="mr-2 h-4 w-4 animate-spin" />
-                    {loadingText}
-                  </>
-                ) : selectedModels.length === 0 ? (
-                  <>
-                    <MessageSquare className="mr-2 h-4 w-4" />
-                    Select a model
-                  </>
-                ) : (
-                  <>
-                    <MessageSquare className="mr-2 h-4 w-4" />
-                    Query Selected AIs
-                  </>
-                )}
-              </Button>
-
-              <Button
-                type="button"
-                variant="destructive"
-                className="bg-red-500 hover:bg-red-600 shadow-red-neon"
-                onClick={stopQuery}
-                disabled={!isLoading}
-              >
-                <StopCircle className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </form>
-      </div>
-
-      <div className="flex-1 p-4 lg:p-6 flex flex-col gap-4 relative overflow-hidden">
-        <div className={`grid gap-4 ${getLayoutClass()} flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar`}>
-          {isLoading ? (
-            selectedModels.map((modelId) => (
-              <div key={modelId} className="min-h-[200px]">
-                <Skeleton className="h-full w-full bg-indigo-900/40 animate-pulse" />
-              </div>
-            ))
-          ) : (
-            responses.map((response, index) => {
-              const modelId = selectedModels[index];
-              // Only render response card if model is selected
-              if (!selectedModels.includes(modelId)) return null;
-
-              const isExpanded = expandedCards.includes(modelId);
-              const isMaximized = maximizedCard === modelId;
-
-              return (
-                <div
-                  key={modelId}
-                  className={`${isExpanded ? 'min-h-[200px]' : 'h-auto'} ${isMaximized ? 'col-span-full row-span-full' : ''}`}
-                  style={{ zIndex: isMaximized ? 10 : 1 }}
-                >
-                  <ResponseCard
-                    response={response}
-                    isExpanded={isExpanded}
-                    isMaximized={isMaximized}
-                    onToggleExpand={() => toggleCard(modelId)}
-                    onToggleMaximize={() => toggleMaximize(modelId)}
-                    viewLayout={viewLayout}
-                  />
-                </div>
-              );
-            })
-          )}
-        </div>
-      </div>
+      <ResultsGrid
+        isLoading={isLoading}
+        responses={responses}
+        selectedModels={selectedModels}
+        expandedCards={expandedCards}
+        maximizedCard={maximizedCard}
+        toggleCard={toggleCard}
+        toggleMaximize={toggleMaximize}
+        viewLayout={viewLayout}
+      />
     </div>
   );
 }

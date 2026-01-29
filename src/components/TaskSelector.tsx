@@ -3,6 +3,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { preselectModelsForTask, tasks } from "@/lib/taskData";
 import { AIModel } from "@/lib/types";
 import { ChevronRight, LightbulbIcon } from "lucide-react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 
 interface TaskSelectorProps {
@@ -16,8 +17,7 @@ export default function TaskSelector({
   selectedTask,
   onSelectTask
 }: TaskSelectorProps) {
-  // Collapse when a task is selected
-  const isOpen = selectedTask === null;
+  const [isOpen, setIsOpen] = useState(true);
 
   const handleTaskSelect = (taskName: string) => {
     if (selectedTask === taskName) {
@@ -34,18 +34,10 @@ export default function TaskSelector({
   const headerText = selectedTask ? `Tasks: [${selectedTask}]` : "Tasks";
 
   return (
-    <Collapsible open={isOpen}>
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <Card className="bg-indigo-900/40 dark:bg-gray-900/70 backdrop-blur-sm border-pink-300/30 dark:border-pink-800/30 shadow-neon">
         <CardContent className="p-4">
-          <CollapsibleTrigger 
-            className="w-full"
-            onClick={() => {
-              if (selectedTask) {
-                // If collapsed (task selected), clicking header clears selection
-                onSelectTask(null, []);
-              }
-            }}
-          >
+          <CollapsibleTrigger className="w-full">
             <h4 className="text-base font-semibold flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
               <LightbulbIcon className="h-4 w-4 text-pink-500 pixel-art flex-shrink-0" />
               <span className="truncate text-base text-cyan-300 dark:text-cyan-400 retro-text">

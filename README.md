@@ -35,9 +35,9 @@ npm install
 2. Open `http://localhost:3000` in your browser.
 3. Ensure you have signed up for the Puter API and configured your API key.
 
-## 📌 Upcoming Features
-- [ ] Implement Task-Based AI Suggestions
-- [ ] Add more AI models (e.g., Perplexity, Mistral)
+## 🔄 Next Steps
+- [ ] Refactor vibe-coded bloat and optimize component structure
+- [ ] Multi-modal input (image + text)
 
 ## 🤝 Contributing
 Pull requests are welcome! Open an issue for feature requests or bug reports.

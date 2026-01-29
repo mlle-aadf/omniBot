@@ -6,8 +6,8 @@
     - [x] Sanitize Environment & Dependencies <!-- id: 3 -->
 
 - [ ] **Phase 2: Data Layer Refactor**
-    - [ ] Centralize AI Client Logic (Remove duplicates) <!-- id: 4 -->
-    - [ ] Implement `useMultiModelQuery` Hook <!-- id: 5 -->
+    - [x] Centralize AI Client Logic (Remove duplicates) <!-- id: 4 -->
+    - [x] Implement `useMultiModelQuery` Hook <!-- id: 5 -->
 
 - [ ] **Phase 3: Component Architecture** 
     - [ ] Extract `QueryForm` Component <!-- id: 6 -->

@@ -3,9 +3,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { usePuter } from "@/hooks/usePuter";
-import { queryClaude, queryDeepseek, queryGemini, queryGemma, queryGrok, queryLlama, queryMistral, queryOpenAI } from "@/lib/ai-clients";
-import { AIModel, AIResponse, ResponseLength, ViewLayout } from "@/lib/types";
+import { useMultiModelQuery } from "@/hooks/useMultiModelQuery";
+import { AIModel, ResponseLength, ViewLayout } from "@/lib/types";
 import { Bot, Loader, MessageSquare, StopCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import ModelSelector from "./ModelSelector";
@@ -15,8 +14,6 @@ import TaskSelector from "./TaskSelector";
 
 export default function MultiAIQuery() {
   const [prompt, setPrompt] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [responses, setResponses] = useState<AIResponse[]>([]);
   const [expandedCards, setExpandedCards] = useState<string[]>([]);
   const [maximizedCard, setMaximizedCard] = useState<string | null>(null);
   const [selectedModels, setSelectedModels] = useLocalStorage<string[]>("selectedModels", []);
@@ -24,9 +21,32 @@ export default function MultiAIQuery() {
   const [viewLayout, setViewLayout] = useLocalStorage<ViewLayout>("viewLayout", "columns");
   const [responseLength, setResponseLength] = useLocalStorage<ResponseLength>("responseLength", "brief");
   const { toast } = useToast();
-  const { isPuterReady, error: puterError } = usePuter();
-  const [abortController, setAbortController] = useState<AbortController | null>(null);
   const [loadingText, setLoadingText] = useState("Querying...");
+
+  const availableModels: AIModel[] = [
+    { id: "gpt4", name: "GPT-4" },
+    { id: "gemini", name: "Gemini" },
+    { id: "claude", name: "Claude" },
+    { id: "deepseek", name: "Deepseek" },
+    { id: "grok", name: "Grok" },
+    { id: "llama", name: "Llama" },
+    { id: "mistral", name: "Mistral" },
+    { id: "gemma", name: "Gemma" }
+  ];
+
+  const {
+    isLoading,
+    responses,
+    queryAllModels,
+    stopQuery,
+    isPuterReady,
+    setResponses
+  } = useMultiModelQuery({
+    prompt,
+    selectedModels,
+    responseLength,
+    availableModels
+  });
 
   const loadingPhrases = [
     "Powering up processors...",
@@ -45,128 +65,18 @@ export default function MultiAIQuery() {
         const randomIndex = Math.floor(Math.random() * loadingPhrases.length);
         setLoadingText(loadingPhrases[randomIndex]);
       }, 2000);
-      
+
       return () => clearInterval(interval);
     }
   }, [isLoading]);
 
-  const availableModels: AIModel[] = [
-    { id: "gpt4", name: "GPT-4", queryFn: queryOpenAI },
-    { id: "gemini", name: "Gemini", queryFn: queryGemini },
-    { id: "claude", name: "Claude", queryFn: queryClaude },
-    { id: "deepseek", name: "Deepseek", queryFn: queryDeepseek },
-    { id: "grok", name: "Grok", queryFn: queryGrok },
-    { id: "llama", name: "Llama", queryFn: queryLlama },
-    { id: "mistral", name: "Mistral", queryFn: queryMistral },
-    { id: "gemma", name: "Gemma", queryFn: queryGemma }
-  ];
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!isPuterReady) {
-      toast({
-        title: "Error",
-        description: "Puter API is not ready yet. Please wait...",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (puterError) {
-      toast({
-        title: "Error",
-        description: "Failed to initialize Puter API. Please refresh the page.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (!prompt.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter a prompt",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (selectedModels.length === 0) {
-      toast({
-        title: "Error",
-        description: "Please select at least one AI model",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    await queryModels();
-  };
-
-  const stopQuery = () => {
-    if (abortController) {
-      abortController.abort();
-      setAbortController(null);
-      setIsLoading(false);
-      toast({
-        title: "Query Stopped",
-        description: "AI query has been stopped",
-      });
-    }
-  };
-
-  const queryModels = async () => {
-    setIsLoading(true);
-    setResponses([]);
+    setExpandedCards(selectedModels);
     setMaximizedCard(null);
-
-    const controller = new AbortController();
-    setAbortController(controller);
-
-    try {
-      const selectedModelQueries = availableModels
-        .filter(model => selectedModels.includes(model.id))
-        .map(model => model.queryFn(prompt, responseLength));
-
-      const results = await Promise.allSettled(selectedModelQueries);
-
-      if (controller.signal.aborted) {
-        return;
-      }
-
-      const formattedResponses = results.map((result, index) => {
-        const modelId = selectedModels[index];
-        const modelName = availableModels.find(m => m.id === modelId)?.name || "Unknown";
-        
-        if (result.status === "fulfilled") {
-          console.log("RESULTS: ", result.value);
-          return result.value;
-        } else {
-          return {
-            model: modelName,
-            response: "",
-            error: "Failed to get response",
-          };
-        }
-      });
-
-      setResponses(formattedResponses);
-      setExpandedCards(selectedModels);
-    } catch (error) {
-      if (!controller.signal.aborted) {
-        toast({
-          title: "Error",
-          description: "Failed to query AI models",
-          variant: "destructive",
-        });
-      }
-    } finally {
-      if (!controller.signal.aborted) {
-        setIsLoading(false);
-        setAbortController(null);
-      }
-    }
+    await queryAllModels();
   };
+
 
   const toggleCard = (modelId: string) => {
     if (expandedCards.includes(modelId)) {
@@ -184,8 +94,8 @@ export default function MultiAIQuery() {
   };
 
   const toggleModel = (modelId: string) => {
-    setSelectedModels(prev => 
-      prev.includes(modelId) 
+    setSelectedModels(prev =>
+      prev.includes(modelId)
         ? prev.filter(id => id !== modelId)
         : [...prev, modelId]
     );
@@ -208,7 +118,7 @@ export default function MultiAIQuery() {
   };
 
   // Filter responses based on selected models
-  const visibleResponses = responses.filter((_, index) => 
+  const visibleResponses = responses.filter((_, index) =>
     selectedModels.includes(selectedModels[index])
   );
 
@@ -220,18 +130,18 @@ export default function MultiAIQuery() {
             <Bot className="h-7 w-7 text-pink-500" />
             OmniBot
           </h1>
-          <SettingsDropdown 
-            viewLayout={viewLayout} 
+          <SettingsDropdown
+            viewLayout={viewLayout}
             setViewLayout={setViewLayout}
             responseLength={responseLength}
             setResponseLength={setResponseLength}
           />
         </div>
-        
+
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 flex-1 min-h-0">
           <div className="flex flex-col gap-4 flex-shrink-0">
-            <ModelSelector 
-              availableModels={availableModels} 
+            <ModelSelector
+              availableModels={availableModels}
               selectedModels={selectedModels}
               onToggleModel={toggleModel}
             />
@@ -251,8 +161,8 @@ export default function MultiAIQuery() {
               className="mb-4 resize-none border-pink-300 focus-visible:ring-cyan-400 flex-1 bg-indigo-900/40 dark:bg-gray-900/70 text-white placeholder:text-cyan-200/50 shadow-neon text-lg"
             />
             <div className="flex gap-2">
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full bg-gradient-to-r from-pink-500 to-cyan-500 hover:from-pink-600 hover:to-cyan-600 transition-all duration-300 shadow-neon hover:shadow-neon-lg disabled:opacity-50 disabled:pointer-events-none disabled:shadow-none"
                 disabled={isLoading || selectedModels.length === 0}
               >
@@ -273,9 +183,9 @@ export default function MultiAIQuery() {
                   </>
                 )}
               </Button>
-              
-              <Button 
-                type="button" 
+
+              <Button
+                type="button"
                 variant="destructive"
                 className="bg-red-500 hover:bg-red-600 shadow-red-neon"
                 onClick={stopQuery}
@@ -301,13 +211,13 @@ export default function MultiAIQuery() {
               const modelId = selectedModels[index];
               // Only render response card if model is selected
               if (!selectedModels.includes(modelId)) return null;
-              
+
               const isExpanded = expandedCards.includes(modelId);
               const isMaximized = maximizedCard === modelId;
 
               return (
-                <div 
-                  key={modelId} 
+                <div
+                  key={modelId}
                   className={`${isExpanded ? 'min-h-[200px]' : 'h-auto'} ${isMaximized ? 'col-span-full row-span-full' : ''}`}
                   style={{ zIndex: isMaximized ? 10 : 1 }}
                 >

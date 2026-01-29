@@ -2,7 +2,6 @@
 export interface AIModel {
   id: string;
   name: string;
-  queryFn: (prompt: string, responseLength?: ResponseLength) => Promise<AIResponse>;
 }
 
 export interface AIResponse {

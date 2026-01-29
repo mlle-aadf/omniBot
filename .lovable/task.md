@@ -1,9 +1,9 @@
 # Omnibot Project Overhaul Checklist
 
 - [ ] **Phase 1: Foundation & Safety**
-    - [ ] Fix TypeScript Configuration (Strict Mode) <!-- id: 1 -->
-    - [ ] Add Window Interface Types for Puter <!-- id: 2 -->
-    - [ ] Sanitize Environment & Dependencies <!-- id: 3 -->
+    - [x] Fix TypeScript Configuration (Strict Mode) <!-- id: 1 -->
+    - [x] Add Window Interface Types for Puter <!-- id: 2 -->
+    - [x] Sanitize Environment & Dependencies <!-- id: 3 -->
 
 - [ ] **Phase 2: Data Layer Refactor**
     - [ ] Centralize AI Client Logic (Remove duplicates) <!-- id: 4 -->

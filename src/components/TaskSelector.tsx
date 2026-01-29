@@ -40,7 +40,7 @@ export default function TaskSelector({
           <CollapsibleTrigger className="w-full">
             <h4 className="text-base font-semibold flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
               <LightbulbIcon className="h-4 w-4 text-pink-500 pixel-art flex-shrink-0" />
-              <span className="truncate text-base text-cyan-300 dark:text-cyan-400 retro-text">
+              <span className="text-base text-cyan-300 dark:text-cyan-400 retro-text">
                 Tasks
               </span>
               {selectedTask && (

@@ -2,9 +2,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { preselectModelsForTask, tasks } from "@/lib/taskData";
 import { AIModel } from "@/lib/types";
-import { LightbulbIcon, ChevronRight } from "lucide-react";
+import { ChevronRight, LightbulbIcon } from "lucide-react";
 import { Button } from "./ui/button";
-import { useEffect } from "react";
 
 interface TaskSelectorProps {
   availableModels: AIModel[];
@@ -49,13 +48,12 @@ export default function TaskSelector({
           >
             <h4 className="text-base font-semibold flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
               <LightbulbIcon className="h-4 w-4 text-pink-500 pixel-art flex-shrink-0" />
-              {selectedTask ? (
-                <span className="truncate text-base bg-gradient-to-r from-pink-500 to-cyan-500 bg-clip-text text-transparent font-bold">
-                  {headerText}
-                </span>
-              ) : (
-                <span className="truncate text-base text-cyan-300 dark:text-cyan-400 retro-text">
-                  {headerText}
+              <span className="text-base text-cyan-300 dark:text-cyan-400 retro-text flex-shrink-0">
+                Tasks
+              </span>
+              {selectedTask && (
+                <span className="truncate text-xs text-cyan-400 dark:text-cyan-300 font-normal">
+                  [{selectedTask}]
                 </span>
               )}
               <ChevronRight className={`h-4 w-4 text-pink-500 ml-auto transition-transform ${isOpen ? 'rotate-90' : ''}`} />

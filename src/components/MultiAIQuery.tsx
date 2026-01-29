@@ -264,7 +264,7 @@ export default function MultiAIQuery() {
                 ) : selectedModels.length === 0 ? (
                   <>
                     <MessageSquare className="mr-2 h-4 w-4" />
-                    Select at least one model
+                    Select a model
                   </>
                 ) : (
                   <>

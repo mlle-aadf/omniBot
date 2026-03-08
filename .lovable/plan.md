@@ -1,116 +1,56 @@
 
-# UI Improvements: Pill Buttons, Selection Highlighting, and Typography
 
-## Overview
-This plan transforms the ModelSelector from checkboxes to pill-buttons (matching TaskSelector), adds visual highlighting for selected items in both components, and improves overall legibility with a better font and larger text sizes.
+# Resizable Split Panes for Response Cards
 
----
+## Approach
+Use `react-resizable-panels` (already installed) to replace the CSS grid with draggable split panes. Each response card becomes a panel with a drag handle between them. Users can resize to give more space to any response.
 
-## Changes Summary
+## Layout
 
-### 1. Convert ModelSelector to Pill-Buttons
-Replace the current checkbox + label format with a grid of pill-buttons, matching the TaskSelector layout.
-
-**File: `src/components/ModelSelector.tsx`**
-- Remove `Checkbox` import
-- Change from vertical list layout to 2-column grid (like TaskSelector)
-- Use `Button` components styled as pill-buttons
-- Keep toggle behavior (clicking selects/deselects)
-
-### 2. Add Selection Highlighting with Inverted Colors
-Create clear visual distinction between selected and unselected states for both Bots and Tasks.
-
-**Selected state styling:**
-- Colored background (cyan/pink gradient)
-- Dark text color
-
-**Unselected state styling:**
-- Dark/transparent background
-- Colored text (cyan)
-
-**Files affected:**
-- `src/components/ModelSelector.tsx` - Add conditional styling based on `selectedModels`
-- `src/components/TaskSelector.tsx` - Track selected task and apply inverted colors
-
-**Note:** TaskSelector needs state to track which task is currently selected (adding `selectedTask` state)
-
-### 3. Improve Typography and Legibility
-Switch to "Source Code Pro" font and increase text sizes.
-
-**File: `src/index.css`**
-- Import "Source Code Pro" from Google Fonts
-- Replace "VT323" with "Source Code Pro" as the body font
-- Keep "Press Start 2P" for headers (OmniBot title, section headers)
-- Increase base font size from 1.1rem to 1.15rem
-
-**File: `src/components/MultiAIQuery.tsx`**
-- Add larger text class to Textarea for prompt input
-
----
-
-## Technical Details
-
-### ModelSelector Transformation
-
-Current structure (checkbox list):
 ```text
-+---------------------------+
-| [ ] GPT-4                 |
-| [ ] Gemini                |
-| [ ] Claude                |
-+---------------------------+
+Columns view (2-4 models):
++--------+|+--------+|+--------+|+--------+
+| GPT-4  ||| Gemini ||| Claude ||| Deep.. |
+|        |||        |||        |||        |
+| scroll |||  scroll|||  scroll|||  scroll|
++--------+|+--------+|+--------+|+--------+
+           ^drag      ^drag      ^drag
+
+Rows view:
++------------------------------------+
+| GPT-4          (scrollable)        |
++====================================+  <- drag handle
+| Gemini         (scrollable)        |
++====================================+  <- drag handle
+| Claude         (scrollable)        |
++------------------------------------+
+
+1-2 models: single row of horizontal panes
+3-4 models: single row of horizontal panes
+5+ models: 2 rows of horizontal panes (split vertically first)
 ```
 
-New structure (pill-button grid):
-```text
-+---------------------------+
-| [GPT-4]  [Gemini]         |
-| [Claude] [Deepseek]       |
-| [Grok]   [Llama]          |
-+---------------------------+
-```
+## Changes
 
-### Color Scheme for Selection States
+### `src/components/features/ResultsGrid.tsx`
+- Import `ResizablePanelGroup`, `ResizablePanel`, `ResizableHandle` from `@/components/ui/resizable`
+- Replace CSS grid with `ResizablePanelGroup`
+- Columns view: `direction="horizontal"`, each card in a `ResizablePanel`
+- Rows view: `direction="vertical"`, each card in a `ResizablePanel`
+- For 5+ models in columns: nest two horizontal groups inside a vertical group (2 rows)
+- Remove `expandedCards` and `toggleCard` props entirely
 
-**Selected (inverted):**
-- Background: `bg-gradient-to-r from-pink-500 to-cyan-500`
-- Text: `text-gray-900` (dark)
-- Border: `border-cyan-400`
+### `src/components/ResponseCard.tsx`
+- Remove `isExpanded` / `onToggleExpand` props
+- Always show content with `flex-1 overflow-auto`
+- Keep maximize button only
+- Card fills its panel: `h-full flex flex-col`
 
-**Unselected:**
-- Background: `bg-indigo-800/30` (dark/transparent)
-- Text: `text-cyan-200` (colored)
-- Border: `border-pink-300/30`
+### `src/components/MultiAIQuery.tsx`
+- Remove `expandedCards` state and `toggleCard` function
+- Remove `expandedCards`/`toggleCard` from ResultsGrid props
+- Simplify `handleSubmit` (no expandedCards setup)
 
-### TaskSelector Enhancement
-Add `selectedTask` state to track which task is currently active, allowing proper highlight styling.
+### `src/components/ui/resizable.tsx` (existing)
+- May style the drag handle for better visibility (accent color on hover)
 
-### Font Changes
-
-| Element | Current | New |
-|---------|---------|-----|
-| Body text | VT323 (1.1rem) | Source Code Pro (1.15rem) |
-| Headers | Press Start 2P | Press Start 2P (unchanged) |
-| Textarea | Default | text-lg class added |
-| Placeholder | Default | text-lg (inherited) |
-
----
-
-## Files to Modify
-
-1. **`src/index.css`**
-   - Add Source Code Pro font import
-   - Update body font-family
-   - Increase base font-size
-
-2. **`src/components/ModelSelector.tsx`**
-   - Remove Checkbox, add Button
-   - Change layout to grid
-   - Add selection-based conditional styling
-
-3. **`src/components/TaskSelector.tsx`**
-   - Add `selectedTask` state
-   - Apply inverted colors for selected task
-
-4. **`src/components/MultiAIQuery.tsx`**
-   - Add `text-lg` class to Textarea for larger prompt text

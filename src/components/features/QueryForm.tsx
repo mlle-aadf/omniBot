@@ -175,7 +175,7 @@ export default function QueryForm({
                 </div>
 
                 <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
-                    <DrawerContent className="max-h-[85vh] px-4 pb-6">
+                    <DrawerContent className="max-h-[92vh] min-h-[70vh] px-4 pb-6">
                         <DrawerHeader className="px-0 pb-2">
                             <DrawerTitle className="text-primary retro-text">Configure & Prompt</DrawerTitle>
                         </DrawerHeader>

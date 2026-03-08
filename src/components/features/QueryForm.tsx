@@ -49,7 +49,7 @@ export default function QueryForm({
     const hasSelections = selectedModels.length > 0 || selectedTask !== null;
 
     return (
-        <div className="w-full lg:w-1/4 h-full p-4 lg:p-6 flex flex-col gap-4 neon-card overflow-y-auto custom-scrollbar">
+        <div className="w-full lg:w-1/4 max-h-[45vh] lg:max-h-full lg:h-full p-4 lg:p-6 flex flex-col gap-4 neon-card overflow-y-auto custom-scrollbar shrink-0">
             <div className="flex items-center justify-between mb-2">
                 <h1 className="text-2xl font-bold text-primary flex items-center gap-2 omnibot-title">
                     <Bot className="h-7 w-7 text-accent" />
@@ -98,7 +98,7 @@ export default function QueryForm({
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
                         placeholder="Enter your prompt here..."
-                        className="mb-4 resize-none border-border focus-visible:ring-accent flex-1 bg-secondary/50 text-foreground placeholder:text-muted-foreground shadow-neon text-lg"
+                        className="mb-4 resize-none border-border focus-visible:ring-accent flex-1 min-h-[80px] bg-secondary/50 text-foreground placeholder:text-muted-foreground shadow-neon text-lg"
                     />
                     <div className="flex gap-2">
                         <Button

@@ -8,7 +8,6 @@ import ResultsGrid from "./features/ResultsGrid";
 
 export default function MultiAIQuery() {
   const [prompt, setPrompt] = useState("");
-  const [expandedCards, setExpandedCards] = useState<string[]>([]);
   const [maximizedCard, setMaximizedCard] = useState<string | null>(null);
   const [selectedModels, setSelectedModels] = useLocalStorage<string[]>("selectedModels", []);
   const [selectedTask, setSelectedTask] = useState<string | null>(null);
@@ -66,20 +65,8 @@ export default function MultiAIQuery() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setExpandedCards(selectedModels);
     setMaximizedCard(null);
     await queryAllModels();
-  };
-
-  const toggleCard = (modelId: string) => {
-    if (expandedCards.includes(modelId)) {
-      if (maximizedCard === modelId) {
-        setMaximizedCard(null);
-      }
-      setExpandedCards(prev => prev.filter(id => id !== modelId));
-    } else {
-      setExpandedCards(prev => [...prev, modelId]);
-    }
   };
 
   const toggleMaximize = (modelId: string) => {
@@ -130,9 +117,7 @@ export default function MultiAIQuery() {
         isLoading={isLoading}
         responses={responses}
         selectedModels={selectedModels}
-        expandedCards={expandedCards}
         maximizedCard={maximizedCard}
-        toggleCard={toggleCard}
         toggleMaximize={toggleMaximize}
         viewLayout={viewLayout}
       />

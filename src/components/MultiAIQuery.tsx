@@ -99,6 +99,11 @@ export default function MultiAIQuery() {
     setSelectedModels(modelIds);
   };
 
+  const handleClear = () => {
+    setSelectedTask(null);
+    setSelectedModels([]);
+  };
+
   return (
     <div className="flex flex-col lg:flex-row h-screen w-full overflow-hidden bg-background">
       <QueryForm
@@ -106,8 +111,8 @@ export default function MultiAIQuery() {
         setPrompt={setPrompt}
         isLoading={isLoading}
         selectedModels={selectedModels}
-        setSelectedModels={setSelectedModels} // Passed, though we rely on toggleModel more
-        onToggleModel={toggleModel} // Added logic for toggling
+        setSelectedModels={setSelectedModels}
+        onToggleModel={toggleModel}
         availableModels={availableModels}
         selectedTask={selectedTask}
         onSelectTask={handleTaskSelect}
@@ -117,6 +122,7 @@ export default function MultiAIQuery() {
         setResponseLength={setResponseLength}
         onSubmit={handleSubmit}
         onStop={stopQuery}
+        onClear={handleClear}
         loadingText={loadingText}
       />
 

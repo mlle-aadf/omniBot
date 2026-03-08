@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { AIModel, ResponseLength, ViewLayout } from "@/lib/types";
-import { Loader, MessageSquare, StopCircle } from "lucide-react";
+import { Loader, MessageSquare, RotateCcw, StopCircle } from "lucide-react";
 import ModelSelector from "@/components/ModelSelector";
 import SettingsDropdown from "@/components/SettingsDropdown";
 import TaskSelector from "@/components/TaskSelector";
@@ -23,6 +23,7 @@ interface QueryFormProps {
     setResponseLength: (length: ResponseLength) => void;
     onSubmit: (e: React.FormEvent) => void;
     onStop: () => void;
+    onClear: () => void;
     loadingText: string;
 }
 
@@ -42,8 +43,10 @@ export default function QueryForm({
     setResponseLength,
     onSubmit,
     onStop,
+    onClear,
     loadingText
 }: QueryFormProps) {
+    const hasSelections = selectedModels.length > 0 || selectedTask !== null;
 
     return (
         <div className="w-full lg:w-1/4 h-full p-4 lg:p-6 flex flex-col gap-4 neon-card overflow-y-auto custom-scrollbar">
@@ -52,12 +55,27 @@ export default function QueryForm({
                     <Bot className="h-7 w-7 text-accent" />
                     OmniBot
                 </h1>
-                <SettingsDropdown
-                    viewLayout={viewLayout}
-                    setViewLayout={setViewLayout}
-                    responseLength={responseLength}
-                    setResponseLength={setResponseLength}
-                />
+                <div className="flex items-center gap-1">
+                    {hasSelections && (
+                        <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            onClick={onClear}
+                            className="text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                            aria-label="Clear all selections"
+                            title="Clear all selections"
+                        >
+                            <RotateCcw className="h-4 w-4" />
+                        </Button>
+                    )}
+                    <SettingsDropdown
+                        viewLayout={viewLayout}
+                        setViewLayout={setViewLayout}
+                        responseLength={responseLength}
+                        setResponseLength={setResponseLength}
+                    />
+                </div>
             </div>
 
             <form onSubmit={onSubmit} className="flex flex-col gap-4 flex-1 min-h-0">
@@ -85,7 +103,7 @@ export default function QueryForm({
                     <div className="flex gap-2">
                         <Button
                             type="submit"
-                            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 shadow-neon hover:shadow-neon-lg disabled:opacity-50 disabled:pointer-events-none disabled:shadow-none"
+                            className="w-full bg-primary hover:bg-accent text-primary-foreground hover:text-accent-foreground transition-all duration-300 shadow-neon hover:shadow-neon-lg disabled:opacity-50 disabled:pointer-events-none disabled:shadow-none"
                             disabled={isLoading || selectedModels.length === 0}
                         >
                             {isLoading ? (

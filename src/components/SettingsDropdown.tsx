@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
@@ -28,39 +27,28 @@ export default function SettingsDropdown({
   const { theme, setTheme } = useTheme();
   const [persistedLayout, setPersistedLayout] = useLocalStorage<ViewLayout>("viewLayout", "columns");
 
-  // Update the view layout when the component mounts
   useEffect(() => {
     if (persistedLayout) {
       setViewLayout(persistedLayout);
     }
   }, [persistedLayout, setViewLayout]);
 
-  // Save the layout to localStorage when it changes
   useEffect(() => {
     setPersistedLayout(viewLayout);
   }, [viewLayout, setPersistedLayout]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
+  const toggleDropdown = () => setIsOpen(!isOpen);
+  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
   const responseLengthOptions: { value: ResponseLength; emoji: string; label: string }[] = [
     { value: "brief", emoji: "🎯", label: "Brief" },
@@ -77,7 +65,7 @@ export default function SettingsDropdown({
               variant="ghost"
               size="icon"
               onClick={toggleDropdown}
-              className="text-primary dark:text-primary hover:bg-accent/50 dark:hover:bg-accent/30"
+              className="text-muted-foreground hover:bg-secondary hover:text-foreground"
               aria-label="Settings"
             >
               <Settings className="h-5 w-5" />
@@ -90,19 +78,19 @@ export default function SettingsDropdown({
       </TooltipProvider>
 
       {isOpen && (
-        <Card className="absolute right-0 z-50 mt-2 w-72 p-4 bg-card/95 dark:bg-card/95 border-border shadow-neon backdrop-blur-sm animate-fade-in rounded-lg">
+        <Card className="absolute right-0 z-50 mt-2 w-72 p-4 bg-card/95 border-border shadow-neon backdrop-blur-sm animate-fade-in rounded-lg">
           <div className="space-y-4">
             <div>
               <h3 className="text-sm font-medium mb-2 text-foreground">Theme</h3>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Sun className="h-4 w-4 text-amber-500" />
+                  <Sun className="h-4 w-4 text-muted-foreground" />
                   <span className="text-sm text-foreground">Light</span>
                 </div>
                 <Switch
                   checked={theme === "dark"}
                   onCheckedChange={toggleTheme}
-                  className="data-[state=checked]:bg-primary data-[state=unchecked]:bg-amber-400"
+                  className="data-[state=checked]:bg-primary data-[state=unchecked]:bg-muted"
                 />
                 <div className="flex items-center gap-2">
                   <Moon className="h-4 w-4 text-primary" />
@@ -117,7 +105,7 @@ export default function SettingsDropdown({
                 <Toggle
                   pressed={viewLayout === "columns"}
                   onPressedChange={() => setViewLayout("columns")}
-                  className="justify-start data-[state=on]:bg-primary/30 data-[state=on]:text-primary"
+                  className="justify-start data-[state=on]:bg-primary/20 data-[state=on]:text-primary"
                   aria-label="Columns layout"
                 >
                   <Columns className="h-4 w-4 mr-2" />
@@ -126,7 +114,7 @@ export default function SettingsDropdown({
                 <Toggle
                   pressed={viewLayout === "rows"}
                   onPressedChange={() => setViewLayout("rows")}
-                  className="justify-start data-[state=on]:bg-primary/30 data-[state=on]:text-primary"
+                  className="justify-start data-[state=on]:bg-primary/20 data-[state=on]:text-primary"
                   aria-label="Rows layout"
                 >
                   <Rows className="h-4 w-4 mr-2" />
@@ -147,8 +135,8 @@ export default function SettingsDropdown({
                       onClick={() => setResponseLength(option.value)}
                       className={`flex-1 px-2 py-1.5 rounded-md text-xs font-medium transition-all duration-200 ${
                         isSelected
-                          ? "bg-gradient-to-r from-primary to-vaporwave-cyan text-primary-foreground"
-                          : "bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-secondary text-muted-foreground hover:bg-secondary/80 hover:text-foreground"
                       }`}
                     >
                       <span className="mr-1">{option.emoji}</span>

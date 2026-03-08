@@ -12,8 +12,8 @@ interface QueryFormProps {
     setPrompt: (value: string) => void;
     isLoading: boolean;
     selectedModels: string[];
-    setSelectedModels: (models: string[]) => void; // Corrected type: ModelSelector expects (models: string[]) => void
-    onToggleModel: (modelId: string) => void; // Added: ModelSelector expects this
+    setSelectedModels: (models: string[]) => void;
+    onToggleModel: (modelId: string) => void;
     availableModels: AIModel[];
     selectedTask: string | null;
     onSelectTask: (taskName: string | null, modelIds: string[]) => void;
@@ -48,8 +48,8 @@ export default function QueryForm({
     return (
         <div className="w-full lg:w-1/4 h-full p-4 lg:p-6 flex flex-col gap-4 neon-card overflow-y-auto custom-scrollbar">
             <div className="flex items-center justify-between mb-2">
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-cyan-400 bg-clip-text text-transparent flex items-center gap-2 omnibot-title">
-                    <Bot className="h-7 w-7 text-pink-500" />
+                <h1 className="text-2xl font-bold text-primary flex items-center gap-2 omnibot-title">
+                    <Bot className="h-7 w-7 text-accent" />
                     OmniBot
                 </h1>
                 <SettingsDropdown
@@ -80,12 +80,12 @@ export default function QueryForm({
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
                         placeholder="Enter your prompt here..."
-                        className="mb-4 resize-none border-pink-300 focus-visible:ring-cyan-400 flex-1 bg-indigo-900/40 dark:bg-gray-900/70 text-white placeholder:text-cyan-200/50 shadow-neon text-lg"
+                        className="mb-4 resize-none border-border focus-visible:ring-accent flex-1 bg-secondary/50 text-foreground placeholder:text-muted-foreground shadow-neon text-lg"
                     />
                     <div className="flex gap-2">
                         <Button
                             type="submit"
-                            className="w-full bg-gradient-to-r from-pink-500 to-cyan-500 hover:from-pink-600 hover:to-cyan-600 transition-all duration-300 shadow-neon hover:shadow-neon-lg disabled:opacity-50 disabled:pointer-events-none disabled:shadow-none"
+                            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 shadow-neon hover:shadow-neon-lg disabled:opacity-50 disabled:pointer-events-none disabled:shadow-none"
                             disabled={isLoading || selectedModels.length === 0}
                         >
                             {isLoading ? (
@@ -109,7 +109,7 @@ export default function QueryForm({
                         <Button
                             type="button"
                             variant="destructive"
-                            className="bg-red-500 hover:bg-red-600 shadow-red-neon"
+                            className="shadow-red-neon"
                             onClick={onStop}
                             disabled={!isLoading}
                         >

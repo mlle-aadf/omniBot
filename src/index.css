@@ -6,92 +6,99 @@
 
 @layer base {
   :root {
-    /* Light Theme - Cool Purple/Cyan Aesthetic (matching dark theme) */
-    --background: 270 25% 96%;
-    --foreground: 270 35% 14%;
+    /* Light Theme - Clean white with purple/cyan accents */
+    --background: 0 0% 97%;
+    --foreground: 0 0% 9%;
 
-    --card: 270 20% 94%;
-    --card-foreground: 270 30% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
 
-    --popover: 270 20% 94%;
-    --popover-foreground: 270 30% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
 
-    --primary: 283 95% 52%;
-    --primary-foreground: 270 25% 98%;
+    --primary: 270 80% 55%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 320 85% 72%;
-    --secondary-foreground: 270 30% 16%;
+    --secondary: 0 0% 92%;
+    --secondary-foreground: 0 0% 15%;
 
-    --muted: 270 20% 89%;
-    --muted-foreground: 270 15% 50%;
+    --muted: 0 0% 93%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 187 80% 52%;
-    --accent-foreground: 270 30% 13%;
+    --accent: 187 80% 42%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 80% 52%;
-    --destructive-foreground: 270 25% 98%;
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 270 20% 84%;
-    --input: 270 20% 86%;
-    --ring: 283 95% 52%;
+    --border: 0 0% 85%;
+    --input: 0 0% 88%;
+    --ring: 270 80% 55%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 100% 50%;
-    --sidebar-foreground: 270 30% 22%;
-    --sidebar-primary: 283 95% 50%;
-    --sidebar-primary-foreground: 270 25% 98%;
-    --sidebar-accent: 320 85% 68%;
-    --sidebar-accent-foreground: 270 30% 14%;
-    --sidebar-border: 270 15% 81%;
-    --sidebar-ring: 283 95% 52%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 15%;
+    --sidebar-primary: 270 80% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 187 80% 42%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 88%;
+    --sidebar-ring: 270 80% 55%;
 
-    /* Vaporwave Theme Colors - Light Mode (cool palette) */
-    --vaporwave-pink: 283 95% 52%;
-    --vaporwave-cyan: 187 80% 52%;
-    --vaporwave-purple: 280 85% 50%;
-    --vaporwave-indigo: 260 90% 48%;
-    --vaporwave-blue: 210 85% 58%;
+    /* Accent colors */
+    --vaporwave-pink: 270 80% 55%;
+    --vaporwave-cyan: 187 80% 42%;
+    --vaporwave-purple: 270 70% 50%;
+    --vaporwave-indigo: 255 70% 50%;
+    --vaporwave-blue: 210 80% 50%;
   }
 
   .dark {
-    /* Dark Theme - Much Darker */
-    --background: 252 50% 5%;
-    --foreground: 210 40% 98%;
+    /* Dark Theme - Deep blacks with purple/cyan accents */
+    --background: 0 0% 4%;
+    --foreground: 0 0% 93%;
 
-    --card: 252 40% 7%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 93%;
 
-    --popover: 252 40% 7%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 93%;
 
-    --primary: 283 90% 60%;
-    --primary-foreground: 252 10% 5%;
+    --primary: 270 80% 60%;
+    --primary-foreground: 0 0% 4%;
 
-    --secondary: 246 40% 15%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 93%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 55%;
 
-    --accent: 246 35% 20%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 187 70% 45%;
+    --accent-foreground: 0 0% 4%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 93%;
 
-    --border: 246 30% 20%;
-    --input: 246 30% 20%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 270 80% 60%;
 
-    --sidebar-background: 252 40% 7%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 0 0% 93%;
+    --sidebar-primary: 270 80% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 187 70% 45%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 14%;
+    --sidebar-ring: 270 80% 60%;
+
+    /* Accent colors */
+    --vaporwave-pink: 270 80% 60%;
+    --vaporwave-cyan: 187 70% 50%;
+    --vaporwave-purple: 270 70% 55%;
+    --vaporwave-indigo: 255 70% 55%;
+    --vaporwave-blue: 210 80% 55%;
   }
 }
 
@@ -116,84 +123,62 @@
   }
 }
 
-/* Vaporwave Theme Classes */
+/* Background gradient */
 .vaporwave-bg {
-  background: linear-gradient(135deg, #ffffff, #ffa3f3, #d8a3f0);
-  background-size: 400% 400%;
-  animation: gradient-shift 15s ease infinite;
+  background: hsl(var(--background));
 }
 
 .dark .vaporwave-bg {
-  background: linear-gradient(135deg, #15003d, #4b3789, #7e2097);
-  background-size: 400% 400%;
-  animation: gradient-shift 15s ease infinite;
+  background: hsl(var(--background));
 }
 
 .neon-card {
-  background-color: rgba(30, 20, 60, 0.7);
+  background-color: hsl(var(--card));
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid hsl(var(--border));
   border-radius: 0.5rem;
-  box-shadow: 0 0 15px rgba(155, 135, 245, 0.5);
 }
 
 .shadow-neon {
-  box-shadow: 0 0 10px rgba(214, 188, 250, 0.6);
+  box-shadow: 0 0 8px hsl(var(--primary) / 0.15);
 }
 
 .shadow-neon-lg {
-  box-shadow: 0 0 20px rgba(214, 188, 250, 0.8);
+  box-shadow: 0 0 16px hsl(var(--primary) / 0.25);
 }
 
 .shadow-red-neon {
-  box-shadow: 0 0 10px rgba(255, 100, 100, 0.7);
+  box-shadow: 0 0 8px hsl(var(--destructive) / 0.3);
 }
 
 .retro-text {
-  text-shadow: 2px 2px 0px #ff00ff;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   font-family: 'Press Start 2P', cursive;
-  font-size: 0.9em;
+  font-size: 0.75em;
 }
 
 .omnibot-title {
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   text-align: center;
-  text-shadow: 2px 2px 0px #ff00ff, -2px -2px 0px #00ffff;
 }
 
 @keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* Grid line background */
 .grid-lines {
-  background-image: linear-gradient(rgba(155, 135, 245, 0.2) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(155, 135, 245, 0.2) 1px, transparent 1px);
+  background-image: linear-gradient(hsl(var(--primary) / 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--primary) / 0.08) 1px, transparent 1px);
   background-size: 30px 30px;
 }
 
 /* Animation keyframes */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
@@ -207,47 +192,29 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(30, 20, 60, 0.3);
+  background: hsl(var(--muted) / 0.3);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(155, 135, 245, 0.6);
+  background: hsl(var(--primary) / 0.4);
   border-radius: 3px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(155, 135, 245, 0.8);
+  background: hsl(var(--primary) / 0.6);
 }
 
 /* For Firefox */
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(155, 135, 245, 0.6) rgba(30, 20, 60, 0.3);
-}
-
-/* Neon text glow animation */
-@keyframes neon-pulse {
-
-  0%,
-  100% {
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff00ff, 0 0 20px #ff00ff;
-  }
-
-  50% {
-    text-shadow: 0 0 5px #fff, 0 0 10px #00ffff, 0 0 15px #00ffff, 0 0 20px #00ffff;
-  }
-}
-
-.neon-text {
-  animation: neon-pulse 2s ease-in-out infinite;
-  color: white;
+  scrollbar-color: hsl(var(--primary) / 0.4) hsl(var(--muted) / 0.3);
 }
 
 /* Pixel art icons */
 .pixel-art {
   image-rendering: pixelated;
-  filter: contrast(1.5) brightness(1.2);
-  transform: scale(1.2);
+  filter: contrast(1.3) brightness(1.1);
+  transform: scale(1.1);
 }
 
 /* Fix for maximized response cards to prevent horizontal scrolling */
@@ -256,6 +223,6 @@
 }
 
 /* Fix for max height on sidebar */
-.lg:max-h-screen {
+.lg\:max-h-screen {
   max-height: 100vh;
 }

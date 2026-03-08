@@ -100,7 +100,7 @@ export default function MultiAIQuery() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row h-screen w-full overflow-hidden bg-gradient-to-br from-purple-800 to-indigo-900 dark:from-gray-900 dark:to-gray-800 vaporwave-bg">
+    <div className="flex flex-col lg:flex-row h-screen w-full overflow-hidden bg-background">
       <QueryForm
         prompt={prompt}
         setPrompt={setPrompt}

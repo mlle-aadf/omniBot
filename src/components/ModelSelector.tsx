@@ -42,8 +42,8 @@ export default function ModelSelector({
                     variant="outline"
                     className={`text-sm p-2 h-auto transition-all duration-200 ${
                       isSelected
-                        ? "bg-primary text-primary-foreground font-semibold border-primary hover:bg-primary/90"
-                        : "border-border bg-secondary/50 text-foreground hover:bg-secondary"
+                        ? "bg-primary text-primary-foreground font-semibold border-primary hover:bg-accent hover:text-accent-foreground hover:border-accent"
+                        : "border-border bg-secondary/50 text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent"
                     }`}
                   >
                     {model.name}

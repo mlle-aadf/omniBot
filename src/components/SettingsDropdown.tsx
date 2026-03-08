@@ -65,7 +65,7 @@ export default function SettingsDropdown({
               variant="ghost"
               size="icon"
               onClick={toggleDropdown}
-              className="text-muted-foreground hover:bg-secondary hover:text-foreground"
+              className="text-muted-foreground hover:bg-accent hover:text-accent-foreground"
               aria-label="Settings"
             >
               <Settings className="h-5 w-5" />
@@ -105,7 +105,7 @@ export default function SettingsDropdown({
                 <Toggle
                   pressed={viewLayout === "columns"}
                   onPressedChange={() => setViewLayout("columns")}
-                  className="justify-start data-[state=on]:bg-primary/20 data-[state=on]:text-primary"
+                  className="justify-start data-[state=on]:bg-primary/20 data-[state=on]:text-primary hover:bg-accent hover:text-accent-foreground"
                   aria-label="Columns layout"
                 >
                   <Columns className="h-4 w-4 mr-2" />
@@ -114,7 +114,7 @@ export default function SettingsDropdown({
                 <Toggle
                   pressed={viewLayout === "rows"}
                   onPressedChange={() => setViewLayout("rows")}
-                  className="justify-start data-[state=on]:bg-primary/20 data-[state=on]:text-primary"
+                  className="justify-start data-[state=on]:bg-primary/20 data-[state=on]:text-primary hover:bg-accent hover:text-accent-foreground"
                   aria-label="Rows layout"
                 >
                   <Rows className="h-4 w-4 mr-2" />
@@ -136,7 +136,7 @@ export default function SettingsDropdown({
                       className={`flex-1 px-2 py-1.5 rounded-md text-xs font-medium transition-all duration-200 ${
                         isSelected
                           ? "bg-primary text-primary-foreground"
-                          : "bg-secondary text-muted-foreground hover:bg-secondary/80 hover:text-foreground"
+                          : "bg-secondary text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                       }`}
                     >
                       <span className="mr-1">{option.emoji}</span>

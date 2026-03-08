@@ -16,7 +16,7 @@ export default function TaskSelector({
   selectedTask,
   onSelectTask
 }: TaskSelectorProps) {
-  const isOpen = selectedTask === null;
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleTaskSelect = (taskName: string) => {
     if (selectedTask === taskName) {

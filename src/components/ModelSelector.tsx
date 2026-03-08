@@ -16,7 +16,7 @@ export default function ModelSelector({
   selectedModels,
   onToggleModel,
 }: ModelSelectorProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
@@ -26,6 +26,9 @@ export default function ModelSelector({
             <h4 className="text-base font-semibold text-primary flex items-center gap-2 retro-text cursor-pointer hover:opacity-80 transition-opacity">
               <Brain className="h-4 w-4 text-accent pixel-art flex-shrink-0" />
               <span className="truncate">Bots</span>
+              {selectedModels.length > 0 && (
+                <span className="text-sm text-accent font-normal">[{selectedModels.length}]</span>
+              )}
               <ChevronRight className={`h-4 w-4 text-muted-foreground ml-auto transition-transform ${isOpen ? 'rotate-90' : ''}`} />
             </h4>
           </CollapsibleTrigger>

@@ -6,12 +6,14 @@ interface ResponseCardProps {
   response: AIResponse;
   isMaximized: boolean;
   onToggleMaximize: () => void;
+  compact?: boolean;
 }
 
 export default function ResponseCard({
   response,
   isMaximized,
   onToggleMaximize,
+  compact = false,
 }: ResponseCardProps) {
   return (
     <Card className={`w-full h-full backdrop-blur-sm border-border shadow-neon hover:shadow-neon-lg transition-all duration-300 flex flex-col bg-card ${
@@ -23,26 +25,37 @@ export default function ResponseCard({
           {response.model}
         </CardTitle>
         
-        <button 
-          onClick={onToggleMaximize}
-          className="p-1 rounded-md hover:bg-secondary transition-colors"
-          aria-label={isMaximized ? "Minimize response" : "Maximize response"}
-        >
-          {isMaximized ? (
-            <Minimize className="h-4 w-4 text-muted-foreground" />
-          ) : (
-            <Maximize className="h-4 w-4 text-muted-foreground" />
-          )}
-        </button>
+        {!compact && (
+          <button 
+            onClick={(e) => { e.stopPropagation(); onToggleMaximize(); }}
+            className="p-1 rounded-md hover:bg-secondary transition-colors"
+            aria-label={isMaximized ? "Minimize response" : "Maximize response"}
+          >
+            {isMaximized ? (
+              <Minimize className="h-4 w-4 text-muted-foreground" />
+            ) : (
+              <Maximize className="h-4 w-4 text-muted-foreground" />
+            )}
+          </button>
+        )}
       </CardHeader>
       
-      <CardContent className="flex-1 overflow-auto custom-scrollbar">
-        {response.error ? (
-          <p className="text-destructive">{response.error}</p>
-        ) : (
-          <p className="whitespace-pre-wrap text-foreground leading-relaxed">{response.response}</p>
-        )}
-      </CardContent>
+      {!compact && (
+        <CardContent className="flex-1 overflow-auto custom-scrollbar">
+          {response.error ? (
+            <p className="text-destructive">{response.error}</p>
+          ) : (
+            <p className="whitespace-pre-wrap text-foreground leading-relaxed">{response.response}</p>
+          )}
+        </CardContent>
+      )}
+      {compact && (
+        <CardContent className="py-0 overflow-hidden">
+          <p className="text-muted-foreground text-xs truncate">
+            {response.error || response.response?.slice(0, 80) + "…"}
+          </p>
+        </CardContent>
+      )}
     </Card>
   );
 }

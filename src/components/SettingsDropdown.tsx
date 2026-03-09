@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
@@ -77,10 +78,10 @@ export default function SettingsDropdown({
         </Tooltip>
       </TooltipProvider>
 
-      {isOpen && (
+      {isOpen && createPortal(
         <>
-          <div className="fixed inset-x-0 bottom-0 top-[52px] lg:inset-0 z-[99] bg-black/20" onClick={() => setIsOpen(false)} />
-          <Card className="fixed left-1/2 -translate-x-1/2 top-[60px] lg:absolute lg:left-auto lg:translate-x-0 lg:right-0 lg:top-auto z-[100] mt-2 w-72 p-4 bg-card/95 border-border shadow-neon backdrop-blur-sm animate-fade-in rounded-lg">
+          <div className="fixed inset-0 z-[99] bg-black/80" onClick={() => setIsOpen(false)} />
+          <Card className="fixed left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 lg:absolute lg:left-auto lg:translate-x-0 lg:right-0 lg:top-auto lg:translate-y-0 z-[100] mt-2 w-72 p-4 bg-card border-border shadow-neon backdrop-blur-sm animate-fade-in rounded-lg">
           <div className="space-y-4">
             <div>
               <h3 className="text-sm font-medium mb-2 text-foreground">Theme</h3>
@@ -150,7 +151,8 @@ export default function SettingsDropdown({
             </div>
           </div>
         </Card>
-        </>
+        </>,
+        document.body
       )}
     </div>
   );

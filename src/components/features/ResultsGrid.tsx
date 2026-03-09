@@ -57,7 +57,7 @@ export default function ResultsGrid({
             <div
               key={item.modelId}
               className={`transition-all duration-300 ${
-                isExpanded ? "h-[70vh]" : "h-24"
+                isExpanded ? "h-[70vh]" : "h-12"
               }`}
               onClick={() => setExpandedCard(isExpanded ? null : item.modelId)}
             >

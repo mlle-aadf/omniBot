@@ -125,7 +125,7 @@ export default function QueryForm({
     if (isMobile) {
         return (
             <>
-                <div className="w-full p-3 flex items-center gap-2 neon-card shrink-0">
+                <div className="w-full p-3 flex items-center gap-2 neon-card shrink-0 relative z-[100]">
                     <h1 className="text-lg font-bold text-primary flex items-center gap-1.5 omnibot-title shrink-0">
                         <Bot className="h-5 w-5 text-accent" />
                         OmniBot

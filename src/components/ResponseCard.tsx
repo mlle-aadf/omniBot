@@ -41,19 +41,12 @@ export default function ResponseCard({
       </CardHeader>
       
       {!compact && (
-        <CardContent className="flex-1 overflow-auto custom-scrollbar">
+        <CardContent className="flex-1 overflow-auto custom-scrollbar pb-2">
           {response.error ? (
             <p className="text-destructive">{response.error}</p>
           ) : (
             <p className="whitespace-pre-wrap text-foreground leading-relaxed">{response.response}</p>
           )}
-        </CardContent>
-      )}
-      {compact && (
-        <CardContent className="py-0 overflow-hidden">
-          <p className="text-muted-foreground text-xs truncate">
-            {response.error || response.response?.slice(0, 80) + "…"}
-          </p>
         </CardContent>
       )}
     </Card>

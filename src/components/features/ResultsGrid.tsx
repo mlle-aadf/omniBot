@@ -6,6 +6,8 @@ import {
   ResizablePanel,
   ResizableHandle,
 } from "@/components/ui/resizable";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useState } from "react";
 
 interface ResultsGridProps {
   isLoading: boolean;
@@ -24,6 +26,9 @@ export default function ResultsGrid({
   toggleMaximize,
   viewLayout,
 }: ResultsGridProps) {
+  const isMobile = useIsMobile();
+  const [expandedCard, setExpandedCard] = useState<string | null>(null);
+
   const items = isLoading
     ? selectedModels.map((modelId) => ({ type: "loading" as const, modelId }))
     : responses.map((response, index) => ({
@@ -42,9 +47,39 @@ export default function ResultsGrid({
     );
   }
 
-  const direction = viewLayout === "rows" ? "vertical" : "horizontal";
+  // Mobile: stacked cards with tap-to-expand
+  if (isMobile) {
+    return (
+      <div className="flex-1 p-2 overflow-y-auto custom-scrollbar space-y-2">
+        {validItems.map((item) => {
+          const isExpanded = expandedCard === item.modelId;
+          return (
+            <div
+              key={item.modelId}
+              className={`transition-all duration-300 ${
+                isExpanded ? "h-[70vh]" : "h-24"
+              }`}
+              onClick={() => setExpandedCard(isExpanded ? null : item.modelId)}
+            >
+              {item.type === "loading" ? (
+                <Skeleton className="h-full w-full bg-secondary animate-pulse rounded-lg" />
+              ) : (
+                <ResponseCard
+                  response={item.response!}
+                  isMaximized={false}
+                  onToggleMaximize={() => setExpandedCard(isExpanded ? null : item.modelId)}
+                  compact={!isExpanded}
+                />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
 
-  // For columns with 5+ models, split into 2 rows
+  // Desktop: resizable panels
+  const direction = viewLayout === "rows" ? "vertical" : "horizontal";
   const useDoubleRow = viewLayout === "columns" && validItems.length >= 5;
 
   const renderPanel = (item: (typeof validItems)[number], index: number) => {

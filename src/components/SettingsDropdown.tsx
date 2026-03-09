@@ -78,7 +78,7 @@ export default function SettingsDropdown({
       </TooltipProvider>
 
       {isOpen && (
-        <Card className="absolute right-0 z-50 mt-2 w-72 p-4 bg-card/95 border-border shadow-neon backdrop-blur-sm animate-fade-in rounded-lg">
+        <Card className="absolute right-0 z-[100] mt-2 w-72 p-4 bg-card/95 border-border shadow-neon backdrop-blur-sm animate-fade-in rounded-lg">
           <div className="space-y-4">
             <div>
               <h3 className="text-sm font-medium mb-2 text-foreground">Theme</h3>

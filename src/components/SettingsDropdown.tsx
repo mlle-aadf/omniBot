@@ -81,7 +81,7 @@ export default function SettingsDropdown({
       {isOpen && createPortal(
         <>
           <div className="fixed inset-0 z-[99] bg-black/80" onClick={() => setIsOpen(false)} />
-          <Card className="fixed left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 lg:absolute lg:left-auto lg:translate-x-0 lg:right-0 lg:top-auto lg:translate-y-0 z-[100] mt-2 w-72 p-4 bg-card border-border shadow-neon backdrop-blur-sm animate-fade-in rounded-lg">
+          <Card className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[100] w-72 p-4 bg-card border-border shadow-neon backdrop-blur-sm animate-fade-in rounded-lg">
           <div className="space-y-4">
             <div>
               <h3 className="text-sm font-medium mb-2 text-foreground">Theme</h3>

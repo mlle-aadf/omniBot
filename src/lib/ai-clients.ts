@@ -2,14 +2,25 @@ import { AIResponse, ResponseLength, responseLengthPrompts } from "@/lib/types";
 
 // Configuration mapping internal IDs to Puter model identifiers
 export const MODEL_CONFIG: Record<string, string> = {
-  gpt4: 'gpt-4o-mini',
-  gemini: 'gemini-2.0-flash',
-  claude: 'claude-sonnet-4.5', 
-  deepseek: 'deepseek-chat',
-  grok: 'x-ai/grok-2', 
-  llama: 'meta-llama/llama-3.1-405b-instruct:free',
-  mistral: 'mistral-large-latest',
-  gemma: 'google/gemma-2-27b-it',
+  'claude-haiku': 'anthropic/claude-haiku-4-5',
+  'claude-sonnet': 'anthropic/claude-sonnet-4-6',
+  'gemini-flash-lite': 'google/gemini-3.1-flash-lite-preview',
+  'gemini-flash': 'google/gemini-3-flash-preview',
+  'gpt-nano': 'openai/gpt-5.4-nano',
+  'gpt-mini': 'openai/gpt-5.4-mini',
+  'qwen-flash': 'qwen/qwen3.5-flash-02-23',
+  'qwen-27b': 'qwen/qwen3.5-27b',
+  'deepseek': 'deepseek/deepseek-v3.2',
+  'deepseek-special': 'deepseek/deepseek-v3.2-speciale',
+  'mistral-small': 'mistralai/mistral-small-2603',
+  'devstral': 'mistralai/devstral-2512',
+  'olmo-instruct': 'allenai/olmo-3.1-32b-instruct',
+  'olmo-think': 'allenai/olmo-3.1-32b-think',
+  'nemotron': 'nvidia/nemotron-3-nano-30b-a3b',
+  'trinity': 'arcee-ai/trinity-large-preview:free',
+  'minimax': 'minimax/minimax-m2.7',
+  'seed': 'bytedance-seed/seed-2.0-mini',
+  'glm': 'z-ai/glm-4.7-flash',
 };
 
 const ensurePuter = () => {

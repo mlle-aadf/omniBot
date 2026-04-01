@@ -16,12 +16,12 @@ export const tasks: Task[] = [
 ];
 
 export const taskModelMapping: Record<string, string[]> = {
-  "Search": ["Gemini", "Grok", "Deepseek"],
-  "Write": ["GPT-4", "Claude", "Llama", "Mistral"],
-  "Summarize": ["Claude", "GPT-4", "Gemini"],
-  "Translate": ["Deepseek", "Mistral", "Llama"],
-  "Code": ["GPT-4", "Deepseek", "Gemini"],
-  "Reason": ["GPT-4", "Claude", "Deepseek"]
+  "Search": ["Gemini 3 Flash", "GPT-5.4 Mini", "DeepSeek V3.2"],
+  "Write": ["Claude Sonnet 4.6", "GPT-5.4 Mini", "Qwen 3.5 27B", "Mistral Small 2603"],
+  "Summarize": ["Claude Sonnet 4.6", "GPT-5.4 Mini", "Gemini 3.1 Flash Lite"],
+  "Translate": ["DeepSeek V3.2", "Qwen 3.5 Flash", "GLM-4.7 Flash"],
+  "Code": ["GPT-5.4 Mini", "DeepSeek V3.2 Special", "Devstral 2512"],
+  "Reason": ["GPT-5.4 Mini", "Claude Sonnet 4.6", "OLMo 3.1 32B Think"]
 };
 
 export const preselectModelsForTask = (taskName: string, availableModels: AIModel[]): string[] => {

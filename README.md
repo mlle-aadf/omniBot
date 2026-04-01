@@ -40,6 +40,11 @@ npm install
 - [ ] Refactor vibe-coded bloat and optimize component structure
 - [ ] Multi-modal input (image + text)
 
+## 💡 Ideas
+- [ ] Custom task creation: Let users create and save their own task presets
+- [ ] Response analysis: Implement a feature to analyze and summarize differences between AI responses
+- [ ] User accounts: Allow users to save their query history and preferences
+
 ## 🤝 Contributing
 Pull requests are welcome! Open an issue for feature requests or bug reports.
 

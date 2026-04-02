@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { AIModel, ResponseLength, ViewLayout } from "@/lib/types";
+import { tasks } from "@/lib/taskData";
 import { Loader, MessageSquare, RotateCcw, StopCircle, Bot, PenLine } from "lucide-react";
 import ModelSelector from "@/components/ModelSelector";
 import SettingsDropdown from "@/components/SettingsDropdown";
@@ -16,9 +17,11 @@ interface QueryFormProps {
     selectedModels: string[];
     setSelectedModels: (models: string[]) => void;
     onToggleModel: (modelId: string) => void;
+    onSetModels: (modelIds: string[]) => void;
     availableModels: AIModel[];
     selectedTask: string | null;
     onSelectTask: (taskName: string | null) => void;
+    taskModelMapping: Record<string, string[]>;
     viewLayout: ViewLayout;
     setViewLayout: (layout: ViewLayout) => void;
     responseLength: ResponseLength;
@@ -36,9 +39,11 @@ export default function QueryForm({
     selectedModels,
     setSelectedModels,
     onToggleModel,
+    onSetModels,
     availableModels,
     selectedTask,
     onSelectTask,
+    taskModelMapping,
     viewLayout,
     setViewLayout,
     responseLength,
@@ -68,6 +73,9 @@ export default function QueryForm({
                     availableModels={availableModels}
                     selectedModels={selectedModels}
                     onToggleModel={onToggleModel}
+                    onSetModels={onSetModels}
+                    selectedTask={selectedTask}
+                    taskModelMapping={taskModelMapping}
                 />
                 <TaskSelector
                     selectedTask={selectedTask}
@@ -133,12 +141,12 @@ export default function QueryForm({
                     <div className="flex-1 min-w-0 flex items-center gap-1.5 overflow-x-auto custom-scrollbar">
                         {selectedModelNames.length > 0 && (
                             <span className="text-xs text-muted-foreground bg-secondary/80 px-2 py-0.5 rounded-full whitespace-nowrap">
-                                {selectedModelNames.length} bot{selectedModelNames.length !== 1 ? 's' : ''}
+                                {selectedModelNames.length}/6 bots
                             </span>
                         )}
                         {selectedTask && (
                             <span className="text-xs text-accent bg-secondary/80 px-2 py-0.5 rounded-full whitespace-nowrap truncate">
-                                {selectedTask}
+                                {tasks.find(t => t.id === selectedTask)?.name || selectedTask}
                             </span>
                         )}
                     </div>
@@ -174,7 +182,7 @@ export default function QueryForm({
                 </div>
 
                 <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
-                    <DrawerContent className="max-h-[92vh] min-h-[70vh] px-4 pb-6">
+                    <DrawerContent className="max-h-[95vh] min-h-[75vh] px-4 pb-6">
                         <DrawerHeader className="px-0 pb-2">
                             <DrawerTitle className="text-primary retro-text">Configure & Prompt</DrawerTitle>
                         </DrawerHeader>

@@ -1,7 +1,8 @@
 import { useToast } from "@/components/ui/use-toast";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMultiModelQuery } from "@/hooks/useMultiModelQuery";
-import { AIModel, ResponseLength, ViewLayout } from "@/lib/types";
+import { ResponseLength, ViewLayout } from "@/lib/types";
+import { availableModels } from "@/lib/modelData";
 import { useEffect, useState } from "react";
 import QueryForm from "./features/QueryForm";
 import ResultsGrid from "./features/ResultsGrid";
@@ -15,28 +16,6 @@ export default function MultiAIQuery() {
   const [responseLength, setResponseLength] = useLocalStorage<ResponseLength>("responseLength", "brief");
   const { toast } = useToast();
   const [loadingText, setLoadingText] = useState("Querying...");
-
-  const availableModels: AIModel[] = [
-    { id: "claude-haiku", name: "Claude Haiku 4.5" },
-    { id: "claude-sonnet", name: "Claude Sonnet 4.6" },
-    { id: "gemini-flash-lite", name: "Gemini 3.1 Flash Lite" },
-    { id: "gemini-flash", name: "Gemini 3 Flash" },
-    { id: "gpt-nano", name: "GPT-5.4 Nano" },
-    { id: "gpt-mini", name: "GPT-5.4 Mini" },
-    { id: "qwen-flash", name: "Qwen 3.5 Flash" },
-    { id: "qwen-27b", name: "Qwen 3.5 27B" },
-    { id: "deepseek", name: "DeepSeek V3.2" },
-    { id: "deepseek-special", name: "DeepSeek V3.2 Special" },
-    { id: "mistral-small", name: "Mistral Small 2603" },
-    { id: "devstral", name: "Devstral 2512" },
-    { id: "olmo-instruct", name: "OLMo 3.1 32B" },
-    { id: "olmo-think", name: "OLMo 3.1 32B Think" },
-    { id: "nemotron", name: "Nemotron 3 Nano" },
-    { id: "trinity", name: "Trinity Large" },
-    { id: "minimax", name: "MiniMax M2.7" },
-    { id: "seed", name: "Seed 2.0 Mini" },
-    { id: "glm", name: "GLM-4.7 Flash" },
-  ];
 
   const {
     isLoading,
@@ -92,9 +71,8 @@ export default function MultiAIQuery() {
     );
   };
 
-  const handleTaskSelect = (taskName: string | null, modelIds: string[]) => {
+  const handleTaskSelect = (taskName: string | null) => {
     setSelectedTask(taskName);
-    setSelectedModels(modelIds);
   };
 
   const handleClear = () => {

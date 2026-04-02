@@ -1,31 +1,23 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { preselectModelsForTask, tasks } from "@/lib/taskData";
-import { AIModel } from "@/lib/types";
+import { tasks } from "@/lib/taskData";
 import { ChevronRight, LightbulbIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
 
 interface TaskSelectorProps {
-  availableModels: AIModel[];
   selectedTask: string | null;
-  onSelectTask: (taskName: string | null, modelIds: string[]) => void;
+  onSelectTask: (taskName: string | null) => void;
 }
 
 export default function TaskSelector({
-  availableModels,
   selectedTask,
   onSelectTask
 }: TaskSelectorProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleTaskSelect = (taskName: string) => {
-    if (selectedTask === taskName) {
-      onSelectTask(null, []);
-    } else {
-      const modelIds = preselectModelsForTask(taskName, availableModels);
-      onSelectTask(taskName, modelIds);
-    }
+    onSelectTask(selectedTask === taskName ? null : taskName);
   };
 
   return (
@@ -38,7 +30,7 @@ export default function TaskSelector({
               <span className="text-primary retro-text">Tasks</span>
               {selectedTask && (
                 <span className="truncate text-sm text-accent font-normal">
-                  [{selectedTask}]
+                  [{tasks.find(t => t.id === selectedTask)?.name || selectedTask}]
                 </span>
               )}
               <ChevronRight className={`h-4 w-4 text-muted-foreground ml-auto transition-transform ${isOpen ? 'rotate-90' : ''}`} />
@@ -48,12 +40,12 @@ export default function TaskSelector({
           <CollapsibleContent className="mt-3">
             <div className="grid grid-cols-2 gap-2 max-h-[30vh] overflow-y-auto pr-2 custom-scrollbar">
               {tasks.map(task => {
-                const isSelected = selectedTask === task.name;
+                const isSelected = selectedTask === task.id;
                 return (
                   <Button
-                    key={task.name}
+                    key={task.id}
                     type="button"
-                    onClick={() => handleTaskSelect(task.name)}
+                    onClick={() => handleTaskSelect(task.id)}
                     variant="outline"
                     className={`text-sm p-2 h-auto flex flex-col items-start transition-all duration-200 ${
                       isSelected

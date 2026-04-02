@@ -18,7 +18,7 @@ interface QueryFormProps {
     onToggleModel: (modelId: string) => void;
     availableModels: AIModel[];
     selectedTask: string | null;
-    onSelectTask: (taskName: string | null, modelIds: string[]) => void;
+    onSelectTask: (taskName: string | null) => void;
     viewLayout: ViewLayout;
     setViewLayout: (layout: ViewLayout) => void;
     responseLength: ResponseLength;
@@ -70,7 +70,6 @@ export default function QueryForm({
                     onToggleModel={onToggleModel}
                 />
                 <TaskSelector
-                    availableModels={availableModels}
                     selectedTask={selectedTask}
                     onSelectTask={onSelectTask}
                 />

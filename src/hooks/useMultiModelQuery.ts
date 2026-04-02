@@ -83,11 +83,30 @@ export function useMultiModelQuery({
         setAbortController(controller);
 
         try {
-            const selectedModelQueries = selectedModels.map(modelId =>
-                queryModel(modelId, prompt, responseLength)
-            );
-
-            const results = await Promise.allSettled(selectedModelQueries);
+            // Execute queries sequentially with a small delay to avoid Puter rate limits
+            const results: PromiseSettledResult<Awaited<ReturnType<typeof queryModel>>>[] = [];
+            
+            for (let i = 0; i < selectedModels.length; i++) {
+                if (controller.signal.aborted) {
+                    // Fill remaining with rejection
+                    for (let j = i; j < selectedModels.length; j++) {
+                        results.push({ status: "rejected", reason: "Aborted" });
+                    }
+                    break;
+                }
+                
+                try {
+                    const result = await queryModel(selectedModels[i], prompt, responseLength);
+                    results.push({ status: "fulfilled", value: result });
+                } catch (error) {
+                    results.push({ status: "rejected", reason: error });
+                }
+                
+                // Small delay between requests to avoid rate limiting (except after last)
+                if (i < selectedModels.length - 1 && !controller.signal.aborted) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
+            }
 
             if (controller.signal.aborted) {
                 return;

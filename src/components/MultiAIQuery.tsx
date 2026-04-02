@@ -3,9 +3,12 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMultiModelQuery } from "@/hooks/useMultiModelQuery";
 import { ResponseLength, ViewLayout } from "@/lib/types";
 import { availableModels } from "@/lib/modelData";
+import { taskModelMapping } from "@/lib/taskData";
 import { useEffect, useState } from "react";
 import QueryForm from "./features/QueryForm";
 import ResultsGrid from "./features/ResultsGrid";
+
+const MAX_MODELS = 6;
 
 export default function MultiAIQuery() {
   const [prompt, setPrompt] = useState("");
@@ -64,15 +67,23 @@ export default function MultiAIQuery() {
   };
 
   const toggleModel = (modelId: string) => {
-    setSelectedModels(prev =>
-      prev.includes(modelId)
-        ? prev.filter(id => id !== modelId)
-        : [...prev, modelId]
-    );
+    setSelectedModels(prev => {
+      if (prev.includes(modelId)) {
+        return prev.filter(id => id !== modelId);
+      }
+      if (prev.length >= MAX_MODELS) {
+        return prev;  // Don't add beyond cap
+      }
+      return [...prev, modelId];
+    });
   };
 
   const handleTaskSelect = (taskName: string | null) => {
     setSelectedTask(taskName);
+  };
+
+  const handleSetModels = (modelIds: string[]) => {
+    setSelectedModels(modelIds);
   };
 
   const handleClear = () => {
@@ -89,9 +100,11 @@ export default function MultiAIQuery() {
         selectedModels={selectedModels}
         setSelectedModels={setSelectedModels}
         onToggleModel={toggleModel}
+        onSetModels={handleSetModels}
         availableModels={availableModels}
         selectedTask={selectedTask}
         onSelectTask={handleTaskSelect}
+        taskModelMapping={taskModelMapping}
         viewLayout={viewLayout}
         setViewLayout={setViewLayout}
         responseLength={responseLength}

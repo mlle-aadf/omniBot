@@ -352,3 +352,13 @@ Ensure `QueryForm` receives and passes all new props correctly.
 - Model metadata is shown via hover popover on an `(i)` icon, not inline in each row — keeps the list compact.
 - `MODEL_CONFIG` in `ai-clients.ts` is unchanged — it's the Puter API mapping and doesn't need metadata.
 - All new state (sort, group) is local to ModelSelector, not persisted. Only `selectedModels` and `selectedTask` persist via `useLocalStorage`.
+
+---
+
+## Status
+
+- [x] Phase 1: Model Metadata Foundation
+- [x] Phase 2: Task Preset Rework
+- [x] Phase 3: ModelSelector UI Overhaul
+- [x] Phase 4: Wire Up & Polish
+- [x] Bonus: Serialize queries to avoid Puter rate limits (`useMultiModelQuery.ts`)

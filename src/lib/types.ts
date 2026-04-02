@@ -1,7 +1,17 @@
 
+export type ModelOrigin = 'US' | 'CN' | 'FR' | 'KR' | 'EU';
+export type ModelTier = 'open' | 'premium' | 'fast';
+export type ModelSpeed = 'fast' | 'mid' | 'slow';
+export type ModelSpecialty = 'chat' | 'write' | 'analyze' | 'translate' | 'brainstorm';
+
 export interface AIModel {
   id: string;
   name: string;
+  provider: string;
+  origin: ModelOrigin;
+  tier: ModelTier;
+  speed: ModelSpeed;
+  specialties: ModelSpecialty[];
 }
 
 export interface AIResponse {
